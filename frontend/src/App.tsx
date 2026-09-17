@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import { Activity, ShieldAlert, Cpu, HardDrive, Zap, Radio, Search, Code, CheckCircle, ArrowRight, Network, Share2 } from 'lucide-react';
-
-interface TickReport {
-  t: number;
-  world_count: number;
-  guaranteed: boolean;
-  violated: string[];
-}
+import { Activity, ShieldAlert, Cpu, HardDrive, Zap, Radio, Search, CheckCircle, Network, Share2 } from 'lucide-react';
 
 function App() {
   const [loading, setLoading] = useState(false);
