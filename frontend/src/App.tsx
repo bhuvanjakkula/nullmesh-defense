@@ -46,13 +46,13 @@ function App() {
       // During "DISRUPTING..."
       setLatency(142);
       setPacketLoss(4.2);
-      setNodeCount(prev => prev - 14500);
+      setNodeCount(prev => Math.floor(prev * 0.4));
       setRecoveryTime("CALCULATING...");
     } else if (testActive && nodesDisrupted) {
       // After REROUTED
       setLatency(18);
       setPacketLoss(0);
-      setNodeCount(prev => prev + 14000);
+      setNodeCount(prev => Math.floor(prev * 2.5));
       setRecoveryTime("<50ms (Healed)");
     } else {
       // Normal Reset
@@ -69,7 +69,23 @@ function App() {
     }, 1500);
   };
 
-  const [scenario, setScenario] = useState("kill_web");
+  const [scenario, setScenario] = useState("soldiers");
+  useEffect(() => {
+    let baseCount = 15;
+    switch(scenario) {
+      case 'soldiers': baseCount = 15; break;
+      case 'border_posts': baseCount = 85; break;
+      case 'disaster': baseCount = 340; break;
+      case 'vehicles': baseCount = 45; break;
+      case 'uavs': baseCount = 120; break;
+      case 'sensors': baseCount = 5400; break;
+      case 'command': baseCount = 1250; break;
+      case 'naval': baseCount = 220; break;
+      case 'cyber': baseCount = 8900; break;
+      default: baseCount = 15;
+    }
+    setNodeCount(baseCount);
+  }, [scenario]);
   const [customPayload, setCustomPayload] = useState(
     JSON.stringify([
       { agent: "Alpha", schedule: { "0": ["standby"], "12": ["standby", "attack:alpha_target"], "13": ["standby"] } },
@@ -259,60 +275,6 @@ function App() {
               </p>
             </section>
 
-
-
-            <section className="defense-applications" style={{marginBottom: '3rem'}}>
-              <h2 style={{color: 'white', marginBottom: '1.5rem'}}>Strongest Defense Use Cases</h2>
-              <div className="usecase-grid" style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '1rem'}}>
-                <div className="feature-card">
-                  <ShieldAlert className="feature-icon" size={24} />
-                  <div><h3 className="feature-title">Soldiers</h3><p className="feature-desc">Secure local/team communications.</p></div>
-                </div>
-                <div className="feature-card">
-                  <Network className="feature-icon" size={24} />
-                  <div><h3 className="feature-title">Border Posts</h3><p className="feature-desc">Networking remote positions.</p></div>
-                </div>
-                <div className="feature-card">
-                  <Activity className="feature-icon" size={24} />
-                  <div><h3 className="feature-title">Disaster Response</h3><p className="feature-desc">Communications when infrastructure fails.</p></div>
-                </div>
-                <div className="feature-card">
-                  <HardDrive className="feature-icon" size={24} />
-                  <div><h3 className="feature-title">Vehicles</h3><p className="feature-desc">Vehicle-to-unit data exchange.</p></div>
-                </div>
-                <div className="feature-card">
-                  <Radio className="feature-icon" size={24} />
-                  <div><h3 className="feature-title">UAVs</h3><p className="feature-desc">Communications and network relay.</p></div>
-                </div>
-                <div className="feature-card">
-                  <Search className="feature-icon" size={24} />
-                  <div><h3 className="feature-title">Sensors</h3><p className="feature-desc">Distributed sensor-data transport.</p></div>
-                </div>
-                <div className="feature-card">
-                  <Cpu className="feature-icon" size={24} />
-                  <div><h3 className="feature-title">Command Centers</h3><p className="feature-desc">Receive information from distributed nodes.</p></div>
-                </div>
-                <div className="feature-card">
-                  <Share2 className="feature-icon" size={24} />
-                  <div><h3 className="feature-title">Naval Operations</h3><p className="feature-desc">Local resilient communications.</p></div>
-                </div>
-                <div className="feature-card">
-                  <Zap className="feature-icon" size={24} />
-                  <div><h3 className="feature-title">Cyber Operations</h3><p className="feature-desc">Segmented, authenticated node communication.</p></div>
-                </div>
-              </div>
-            </section>
-
-            <section className="roadmap-section" style={{marginBottom: '2rem'}}>
-              <h2 style={{color: 'white', marginBottom: '1.5rem'}}>Engineering Roadmap</h2>
-              <div style={{display: 'flex', flexDirection: 'column', gap: '1rem', background: '#0a0a0a', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)'}}>
-                <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}><span style={{color: 'var(--accent-green)', fontWeight: 'bold'}}>PHASE 1</span> <span style={{color: 'var(--text-muted)'}}>Laptops/phones communicating locally without internet.</span></div>
-                <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}><span style={{color: 'var(--accent-cyan)', fontWeight: 'bold'}}>PHASE 2</span> <span style={{color: 'var(--text-muted)'}}>Automatic peer discovery and multi-hop communication.</span></div>
-                <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}><span style={{color: 'var(--accent-amber)', fontWeight: 'bold'}}>PHASE 3</span> <span style={{color: 'var(--text-muted)'}}>Encrypted and authenticated nodes.</span></div>
-                <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}><span style={{color: 'var(--accent-red)', fontWeight: 'bold'}}>PHASE 4</span> <span style={{color: 'white'}}>Hardware nodes operating over appropriate communications links.</span></div>
-                <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}><span style={{color: '#666', fontWeight: 'bold'}}>PHASE 5</span> <span style={{color: '#666'}}>Field testing with node failures and constrained connectivity.</span></div>
-              </div>
-            </section>
           </div>
 
           {/* Right Side: Auth Form */}
@@ -430,30 +392,25 @@ function App() {
                     <div className="input-group">
                       <label>TACTICAL SCENARIO</label>
                       <select value={scenario} onChange={(e) => { setScenario(e.target.value); setResults(null); setRepair(null); setInference(null); }}>
-                        <option value="killer">OPERATION KILLER (H12)</option>
-                        <option value="late">OPERATION ECHO (H20)</option>
-                        <option value="reserve">LOGISTICS COLLISION (H8)</option>
-                        <option value="uav_swarm">UAV SWARM DECONFLICTION (H15)</option>
-                        <option value="evacuation">EVACUATION LOGISTICS (H10)</option>
-                        <option value="mdo">MULTI-DOMAIN THREAT MATRIX (H14)</option>
-                        <option value="kill_web">DISTRIBUTED KILL WEB (H30)</option>
-                        <option value="swarm">AUTONOMOUS SWARM REPAIR (H10)</option>
-                        <option value="ew_ghost">DECEPTIVE EW GHOST FLEET (H10)</option>
-                        <option value="logistics">CONTESTED LOGISTICS RESILIENCE (H15)</option>
-                        <option value="a2ad">A2/AD THREAT IDENTIFICATION (H20)</option>
-                        <option value="qkd">POST-QUANTUM KEY DISTRIBUTION (H10)</option>
-                        <option value="redundancy">MULTI-PATH FUNCTIONAL REDUNDANCY (H15)</option>
-                        <option value="zero_trust">ZERO-TRUST EDGE EXECUTION (H12)</option>
-                        <option value="microsegmentation">5G MICROSEGMENTATION (H10)</option>
-                        <option value="topology">PARTIAL-MESH TOPOLOGY OPTIMIZATION (H15)</option>
-                        <option value="sdn">SOFTWARE-DEFINED NETWORK REROUTING (H12)</option>
-                        <option value="custom">CUSTOM PAYLOAD BUILDER</option>
+                        <option value="soldiers">SOLDIERS (Local/Team Comms)</option>
+                        <option value="border_posts">BORDER POSTS (Remote Networking)</option>
+                        <option value="disaster">DISASTER RESPONSE (Infrastructure Failed)</option>
+                        <option value="vehicles">VEHICLES (V2U Data Exchange)</option>
+                        <option value="uavs">UAV SWARM (Network Relay)</option>
+                        <option value="sensors">SENSORS (Distributed Transport)</option>
+                        <option value="command">COMMAND CENTERS (Distributed Intel)</option>
+                        <option value="naval">NAVAL OPERATIONS (Resilient Comms)</option>
+                        <option value="cyber">CYBER OPERATIONS (Segmented Nodes)</option>
                       </select>
                     </div>
                     <div className="input-group">
-                      <label>ENGINEER PROTOCOL</label>
-                      <select defaultValue="default">
-                        <option value="default">STRICT NULLMESH v2</option>
+                      <label>DEPLOYMENT PHASE</label>
+                      <select defaultValue="phase5" disabled style={{opacity: 0.8, border: '1px solid var(--accent-red)', color: 'var(--accent-red)', background: 'rgba(255, 0, 0, 0.05)'}}>
+                        <option value="phase1">PHASE 1 (Local Devices)</option>
+                        <option value="phase2">PHASE 2 (Peer Discovery)</option>
+                        <option value="phase3">PHASE 3 (Encrypted Nodes)</option>
+                        <option value="phase4">PHASE 4 (Hardware Links)</option>
+                        <option value="phase5">PHASE 5 (Field Test: Node Failure)</option>
                       </select>
                     </div>
                   </div>
