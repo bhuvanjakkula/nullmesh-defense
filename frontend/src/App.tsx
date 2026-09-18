@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Activity, ShieldAlert, Cpu, HardDrive, Zap, Radio, Search, CheckCircle, Network, Share2 } from 'lucide-react';
+import { Activity, ShieldAlert, Radio, Search, CheckCircle, Network } from 'lucide-react';
 
 function App() {
   const [loading, setLoading] = useState(false);
