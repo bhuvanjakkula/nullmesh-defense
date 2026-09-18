@@ -23,124 +23,59 @@ function App() {
   const [recoveryTime, setRecoveryTime] = useState("<50ms Sub-second Healing");
   const [activeKey, setActiveKey] = useState("0x8F92A1...");
 
-  // Idle fluctuation and key rotation
+  const [ws, setWs] = useState<WebSocket | null>(null);
+
+  // Idle key rotation
   useEffect(() => {
     const interval = setInterval(() => {
-      // Rotate Key
       const chars = "0123456789ABCDEF";
       let key = "0x";
       for (let i = 0; i < 6; i++) key += chars[Math.floor(Math.random() * 16)];
       key += "...";
       setActiveKey(key);
-
-      // Fluctuate Nodes and Latency if not actively disrupted
-      if (!nodesDisrupted) {
-        setNodeCount(prev => prev + Math.floor(Math.random() * 5) - 2);
-        setLatency(8 + Math.floor(Math.random() * 5));
-      }
     }, 2000);
     return () => clearInterval(interval);
-  }, [nodesDisrupted]);
+  }, []);
 
-  // Graph Topology State
-  const [topologyNodes, setTopologyNodes] = useState<any[]>([
-    { id: 'cmd', label: 'Command', x: '12%', y: '50%', status: 'trusted', icon: 'ShieldAlert' },
-    { id: 'a', label: 'Node A', x: '30%', y: '50%', status: 'trusted', icon: 'Network' },
-    { id: 'b', label: 'Node B (Relay)', x: '55%', y: '25%', status: 'trusted', icon: 'Activity' },
-    { id: 'd', label: 'Node D (Backup)', x: '55%', y: '75%', status: 'standby', icon: 'Radio' },
-    { id: 'c', label: 'Node C', x: '78%', y: '50%', status: 'trusted', icon: 'Network' },
-    { id: 'recon', label: 'Recon Unit', x: '92%', y: '50%', status: 'trusted', icon: 'Search' },
-    { id: 'rogue', label: 'Unknown Emitter', x: '30%', y: '15%', status: 'unauthorized', icon: 'Zap' }
-  ]);
-
-  const [topologyLinks, setTopologyLinks] = useState<any[]>([
-    { id: 'cmd-a', source: 'cmd', target: 'a', status: 'active', latency: '8ms', bw: '10G' },
-    { id: 'a-b', source: 'a', target: 'b', status: 'active', latency: '12ms', bw: '10G' },
-    { id: 'b-c', source: 'b', target: 'c', status: 'active', latency: '9ms', bw: '10G' },
-    { id: 'a-d', source: 'a', target: 'd', status: 'standby', latency: '--', bw: '--' },
-    { id: 'd-c', source: 'd', target: 'c', status: 'standby', latency: '--', bw: '--' },
-    { id: 'c-recon', source: 'c', target: 'recon', status: 'active', latency: '14ms', bw: '10G' },
-    { id: 'rogue-a', source: 'rogue', target: 'a', status: 'blocked', latency: 'AUTH_FAIL', bw: '0G' }
-  ]);
-
-  // Disruption Simulation Effects
+  // WebSocket Connection
   useEffect(() => {
-    if (testActive && !nodesDisrupted) {
-      // During "DISRUPTING..."
-      setLatency(142);
-      setPacketLoss(4.2);
-      setNodeCount(prev => Math.floor(prev * 0.4));
-      setRecoveryTime("CALCULATING...");
+    if (isAuthenticated) {
+      const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const wsHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+        ? '127.0.0.1:8001' 
+        : 'nullmesh-defense.onrender.com';
       
-      setTopologyNodes(nodes => nodes.map(n => n.id === 'b' ? { ...n, status: 'offline', label: 'Node B (Lost)' } : n));
-      setTopologyLinks(links => links.map(l => {
-        if (l.id === 'a-b' || l.id === 'b-c') return { ...l, status: 'offline', latency: 'ERR', bw: '0G' };
-        if (l.id === 'a-d' || l.id === 'd-c') return { ...l, status: 'routing', latency: 'CALC', bw: '...' };
-        return l;
-      }));
-    } else if (testActive && nodesDisrupted) {
-      // After REROUTED
-      setLatency(18);
-      setPacketLoss(0);
-      setNodeCount(prev => Math.floor(prev * 2.5));
-      setRecoveryTime("<50ms (Healed)");
-      
-      setTopologyNodes(nodes => nodes.map(n => n.id === 'd' ? { ...n, status: 'trusted', label: 'Node D (Active)' } : n));
-      setTopologyLinks(links => links.map(l => {
-        if (l.id === 'a-d' || l.id === 'd-c') return { ...l, status: 'active', latency: '24ms', bw: '2.1G' };
-        return l;
-      }));
-    } else {
-      // Normal Reset
-      setPacketLoss(0);
-      setRecoveryTime("<50ms Sub-second Healing");
-      
-      setTopologyNodes([
-        { id: 'cmd', label: 'Command', x: '12%', y: '50%', status: 'trusted', icon: 'ShieldAlert' },
-        { id: 'a', label: 'Node A', x: '30%', y: '50%', status: 'trusted', icon: 'Network' },
-        { id: 'b', label: 'Node B (Relay)', x: '55%', y: '25%', status: 'trusted', icon: 'Activity' },
-        { id: 'd', label: 'Node D (Backup)', x: '55%', y: '75%', status: 'standby', icon: 'Radio' },
-        { id: 'c', label: 'Node C', x: '78%', y: '50%', status: 'trusted', icon: 'Network' },
-        { id: 'recon', label: 'Recon Unit', x: '92%', y: '50%', status: 'trusted', icon: 'Search' },
-        { id: 'rogue', label: 'Unknown Emitter', x: '30%', y: '15%', status: 'unauthorized', icon: 'Zap' }
-      ]);
-      setTopologyLinks([
-        { id: 'cmd-a', source: 'cmd', target: 'a', status: 'active', latency: '8ms', bw: '10G' },
-        { id: 'a-b', source: 'a', target: 'b', status: 'active', latency: '12ms', bw: '10G' },
-        { id: 'b-c', source: 'b', target: 'c', status: 'active', latency: '9ms', bw: '10G' },
-        { id: 'a-d', source: 'a', target: 'd', status: 'standby', latency: '--', bw: '--' },
-        { id: 'd-c', source: 'd', target: 'c', status: 'standby', latency: '--', bw: '--' },
-        { id: 'c-recon', source: 'c', target: 'recon', status: 'active', latency: '14ms', bw: '10G' },
-        { id: 'rogue-a', source: 'rogue', target: 'a', status: 'blocked', latency: 'AUTH_FAIL', bw: '0G' }
-      ]);
+      const socket = new WebSocket(`${wsProtocol}//${wsHost}/api/v1/mesh/stream`);
+      socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.type === "MESH_STATE") {
+          setTopologyNodes(data.nodes);
+          setTopologyLinks(data.links);
+          setNodeCount(data.telemetry.nodeCount);
+          setLatency(data.telemetry.latency);
+          setPacketLoss(data.telemetry.packetLoss);
+          setRecoveryTime(data.telemetry.recoveryTime);
+          setNodesDisrupted(data.telemetry.nodesDisrupted);
+          setTestActive(data.telemetry.testActive);
+        }
+      };
+      setWs(socket);
+      return () => socket.close();
     }
-  }, [testActive, nodesDisrupted]);
+  }, [isAuthenticated]);
 
   const triggerResilienceTest = () => {
-    setTestActive(true);
-    setNodesDisrupted(false);
-    setTimeout(() => {
-      setNodesDisrupted(true);
-    }, 1500);
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ command: 'KILL_NODE' }));
+    }
   };
 
   const [scenario, setScenario] = useState("soldiers");
   useEffect(() => {
-    let baseCount = 15;
-    switch(scenario) {
-      case 'soldiers': baseCount = 15; break;
-      case 'border_posts': baseCount = 85; break;
-      case 'disaster': baseCount = 340; break;
-      case 'vehicles': baseCount = 45; break;
-      case 'uavs': baseCount = 120; break;
-      case 'sensors': baseCount = 5400; break;
-      case 'command': baseCount = 1250; break;
-      case 'naval': baseCount = 220; break;
-      case 'cyber': baseCount = 8900; break;
-      default: baseCount = 15;
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ command: 'SET_SCENARIO', scenario }));
     }
-    setNodeCount(baseCount);
-  }, [scenario]);
+  }, [scenario, ws]);
   const [customPayload, setCustomPayload] = useState(
     JSON.stringify([
       { agent: "Alpha", schedule: { "0": ["standby"], "12": ["standby", "attack:alpha_target"], "13": ["standby"] } },
