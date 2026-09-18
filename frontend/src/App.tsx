@@ -24,6 +24,8 @@ function App() {
   const [activeKey, setActiveKey] = useState("0x8F92A1...");
 
   const [ws, setWs] = useState<WebSocket | null>(null);
+  const [topologyNodes, setTopologyNodes] = useState<any[]>([]);
+  const [topologyLinks, setTopologyLinks] = useState<any[]>([]);
 
   // Idle key rotation
   useEffect(() => {
