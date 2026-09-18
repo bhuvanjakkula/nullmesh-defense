@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Activity, ShieldAlert, Cpu, HardDrive, Zap, Radio, Search, CheckCircle, Network, Share2 } from 'lucide-react';
 
 function App() {
@@ -11,6 +11,63 @@ function App() {
   const [isSignUp, setIsSignUp] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [testActive, setTestActive] = useState(false);
+  const [nodesDisrupted, setNodesDisrupted] = useState(false);
+  
+  // Live Telemetry states
+  const [nodeCount, setNodeCount] = useState(250034);
+  const [latency, setLatency] = useState(12);
+  const [packetLoss, setPacketLoss] = useState(0);
+  const [recoveryTime, setRecoveryTime] = useState("<50ms Sub-second Healing");
+  const [activeKey, setActiveKey] = useState("0x8F92A1...");
+
+  // Idle fluctuation and key rotation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Rotate Key
+      const chars = "0123456789ABCDEF";
+      let key = "0x";
+      for (let i = 0; i < 6; i++) key += chars[Math.floor(Math.random() * 16)];
+      key += "...";
+      setActiveKey(key);
+
+      // Fluctuate Nodes and Latency if not actively disrupted
+      if (!nodesDisrupted) {
+        setNodeCount(prev => prev + Math.floor(Math.random() * 5) - 2);
+        setLatency(8 + Math.floor(Math.random() * 5));
+      }
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [nodesDisrupted]);
+
+  // Disruption Simulation Effects
+  useEffect(() => {
+    if (testActive && !nodesDisrupted) {
+      // During "DISRUPTING..."
+      setLatency(142);
+      setPacketLoss(4.2);
+      setNodeCount(prev => prev - 14500);
+      setRecoveryTime("CALCULATING...");
+    } else if (testActive && nodesDisrupted) {
+      // After REROUTED
+      setLatency(18);
+      setPacketLoss(0);
+      setNodeCount(prev => prev + 14000);
+      setRecoveryTime("<50ms (Healed)");
+    } else {
+      // Normal Reset
+      setPacketLoss(0);
+      setRecoveryTime("<50ms Sub-second Healing");
+    }
+  }, [testActive, nodesDisrupted]);
+
+  const triggerResilienceTest = () => {
+    setTestActive(true);
+    setNodesDisrupted(false);
+    setTimeout(() => {
+      setNodesDisrupted(true);
+    }, 1500);
+  };
 
   const [scenario, setScenario] = useState("kill_web");
   const [customPayload, setCustomPayload] = useState(
@@ -194,13 +251,15 @@ function App() {
           <div className="split-left">
             <section className="hero-section" style={{textAlign: 'left', padding: '0 0 2.5rem 0'}}>
               <h1 className="hero-title stylistic-title">
-                <span className="accent-word">Mathematical</span> Certainty<br/>
+                <span className="accent-word">Indestructible</span> Network<br/>
                 for Modern Warfare.
               </h1>
               <p className="hero-subtitle stylistic-subtitle">
-                <strong style={{color: 'var(--accent-cyan)'}}>NULLMESH v2</strong> is the world's first Consequential Divergence Time (CDT) Engine. We mathematically guarantee multi-domain operations, swarm resilience, and threat inference before the enemy even acts.
+                <strong style={{color: 'var(--accent-cyan)'}}>NULLMESH v2</strong> provides mathematical certainty for multi-domain operations. We guarantee secure, offline-capable, and resilient military communications that automatically reroute under severe electronic warfare and physical degradation.
               </p>
             </section>
+
+
 
             <section className="features-section" style={{padding: '0'}}>
               <div className="features-grid">
@@ -357,16 +416,34 @@ function App() {
               </div>
               
               <div className="app-container">
-                <header className="header">
-                  <div className="brand">
-                    <ShieldAlert size={28} className="logo-pulse" color="var(--accent-cyan)"/>
-                    <div style={{display: 'flex', flexDirection: 'column'}}>
-                      <h1>NULLMESH <span className="version">v2</span></h1>
-                      <div className="system-status">
-                        <div className="pulse"></div>
-                        CDT ENGINE ONLINE
+                <header className="header" style={{flexDirection: 'column', alignItems: 'stretch', gap: '1rem'}}>
+                  <div className="brand" style={{display: 'flex', justifyContent: 'space-between', width: '100%'}}>
+                    <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
+                      <ShieldAlert size={28} className="logo-pulse" color="var(--accent-cyan)"/>
+                      <div style={{display: 'flex', flexDirection: 'column'}}>
+                        <h1>NULLMESH <span className="version">v2</span></h1>
+                        <div className="system-status">
+                          <div className="pulse"></div>
+                          CDT ENGINE ONLINE
+                        </div>
                       </div>
                     </div>
+                    <div style={{display: 'flex', gap: '2rem', fontSize: '0.8rem', fontFamily: 'monospace'}}>
+                      <div><span style={{color: 'var(--text-muted)'}}>LATENCY:</span> <span style={{color: testActive && !nodesDisrupted ? 'var(--accent-red)' : 'var(--accent-green)'}}>&lt;{latency}ms</span></div>
+                      <div><span style={{color: 'var(--text-muted)'}}>THROUGHPUT:</span> <span style={{color: testActive && !nodesDisrupted ? 'var(--accent-amber)' : 'var(--accent-green)'}}>{testActive && !nodesDisrupted ? '4.2Gbps' : '10Gbps'}</span></div>
+                      <div><span style={{color: 'var(--text-muted)'}}>NODES:</span> <span style={{color: testActive && !nodesDisrupted ? 'var(--accent-red)' : 'var(--accent-cyan)'}}>{nodeCount.toLocaleString()}</span></div>
+                    </div>
+                  </div>
+                  
+                  <div className="telemetry-dashboard" style={{display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem', marginTop: '0.5rem', padding: '1rem', background: 'rgba(0,0,0,0.5)', border: '1px solid var(--border-color)', borderRadius: '4px'}}>
+                    <div className="tel-item"><span className="tel-label" style={{color: 'var(--text-muted)', fontSize: '0.65rem', display: 'block'}}>RECOVERY TIME</span><span className="tel-val" style={{fontSize: '0.85rem', color: testActive && !nodesDisrupted ? 'var(--accent-amber)' : 'white'}}>{recoveryTime}</span></div>
+                    <div className="tel-item"><span className="tel-label" style={{color: 'var(--text-muted)', fontSize: '0.65rem', display: 'block'}}>PACKET LOSS (DEGRADED)</span><span className="tel-val" style={{fontSize: '0.85rem', color: packetLoss > 0 ? 'var(--accent-red)' : 'white'}}>{packetLoss}% Data Loss (FEC+Multi)</span></div>
+                    <div className="tel-item"><span className="tel-label" style={{color: 'var(--text-muted)', fontSize: '0.65rem', display: 'block'}}>CRYPTO ARCHITECTURE</span><span className="tel-val" style={{fontSize: '0.85rem'}}>Post-Quantum Entangled</span></div>
+                    <div className="tel-item"><span className="tel-label" style={{color: 'var(--text-muted)', fontSize: '0.65rem', display: 'block'}}>DEVICE AUTH</span><span className="tel-val" style={{fontSize: '0.85rem', color: scenario === 'microsegmentation' ? 'var(--accent-cyan)' : 'white'}}>{scenario === 'microsegmentation' ? 'Active Biomimetic Scan...' : 'Zero-Trust Biomimetic'}</span></div>
+                    <div className="tel-item"><span className="tel-label" style={{color: 'var(--text-muted)', fontSize: '0.65rem', display: 'block'}}>KEY MANAGEMENT</span><span className="tel-val" style={{fontSize: '0.85rem', fontFamily: 'monospace', color: 'var(--accent-green)'}}>{activeKey} (Ephemeral)</span></div>
+                    <div className="tel-item"><span className="tel-label" style={{color: 'var(--text-muted)', fontSize: '0.65rem', display: 'block'}}>NODE COMPROMISE RESIST</span><span className="tel-val" style={{fontSize: '0.85rem'}}>Mathematical Isolation</span></div>
+                    <div className="tel-item"><span className="tel-label" style={{color: 'var(--text-muted)', fontSize: '0.65rem', display: 'block'}}>INTEROPERABILITY</span><span className="tel-val" style={{fontSize: '0.85rem'}}><span style={{color: scenario === 'microsegmentation' ? 'var(--accent-cyan)' : 'inherit'}}>5G</span>, JADC2, Link 16, SATCOM</span></div>
+                    <div className="tel-item"><span className="tel-label" style={{color: 'var(--text-muted)', fontSize: '0.65rem', display: 'block'}}>OFFLINE CAPABILITY</span><span className="tel-val" style={{fontSize: '0.85rem'}}>100% Autonomous Air-gap</span></div>
                   </div>
                 </header>
 
@@ -429,7 +506,50 @@ function App() {
                         INFER ENEMY INTENT
                       </button>
                     )}
+                    <button className="btn-stripe btn-stripe-outline" onClick={triggerResilienceTest} disabled={testActive && !nodesDisrupted} style={{marginLeft: 'auto', borderColor: 'var(--accent-amber)', color: 'var(--accent-amber)'}}>
+                      {nodesDisrupted ? 'REROUTED' : (testActive ? 'DISRUPTING...' : 'STRESS TEST ARCHITECTURE')}
+                    </button>
                   </div>
+                </div>
+
+                <div className="panel mt-4" style={{border: '1px solid var(--border-color)', position: 'relative'}}>
+                  <h2 style={{fontSize: '0.85rem', color: 'var(--text-muted)', letterSpacing: '1px', marginBottom: '1.5rem'}}>LIVE NETWORK TOPOLOGY MAP</h2>
+                  <div className="architecture-diagram" style={{margin: '0'}}>
+                    <div className="arch-node" style={{width: '120px', padding: '0.75rem'}}>
+                      <ShieldAlert className="arch-node-icon" size={24} />
+                      <div className="arch-node-title" style={{fontSize: '0.7rem'}}>Command Center</div>
+                    </div>
+                    
+                    <div className="arch-links-container" style={{left: '120px', right: '120px'}}>
+                      <svg className="arch-link-svg" preserveAspectRatio="none" style={{width: '100%', height: '100%'}}>
+                        <path d="M 0 50 Q 150 10 300 50" className={`arch-link-path ${nodesDisrupted ? 'disrupted' : ''}`} />
+                        <path d="M 0 50 L 300 50" className={`arch-link-path ${nodesDisrupted ? 'disrupted' : ''}`} />
+                        <path d="M 0 50 Q 150 120 300 50" className={`arch-link-path ${nodesDisrupted ? 'rerouted' : ''}`} style={{display: testActive ? 'block' : 'none'}} />
+                      </svg>
+                    </div>
+                    
+                    <div style={{display: 'flex', flexDirection: 'column', gap: '1rem', zIndex: 2}}>
+                      <div className={`arch-node ${nodesDisrupted ? 'disrupted' : ''}`} style={{padding: '0.5rem', width: '80px'}}>
+                        <Network className="arch-node-icon" size={20} />
+                        <div className="arch-node-title" style={{fontSize: '0.55rem'}}>Alpha Mesh</div>
+                      </div>
+                      <div className={`arch-node ${nodesDisrupted ? 'disrupted' : ''}`} style={{padding: '0.5rem', width: '80px'}}>
+                        <Network className="arch-node-icon" size={20} />
+                        <div className="arch-node-title" style={{fontSize: '0.55rem'}}>Bravo Mesh</div>
+                      </div>
+                    </div>
+                    
+                    <div className="arch-node" style={{width: '120px', padding: '0.75rem'}}>
+                      <Radio className="arch-node-icon" size={24} />
+                      <div className="arch-node-title" style={{fontSize: '0.7rem'}}>Tactical Edge</div>
+                    </div>
+                  </div>
+                  
+                  {nodesDisrupted && (
+                    <div style={{position: 'absolute', bottom: '10px', right: '10px', background: 'rgba(0, 255, 65, 0.1)', border: '1px solid var(--accent-green)', color: 'var(--accent-green)', padding: '4px 8px', fontSize: '0.65rem', fontFamily: 'monospace', borderRadius: '4px'}}>
+                      WARNING: PRIMARY LINKS SEVERED. DATA REROUTED VIA QUANTUM MESH BACKUP.
+                    </div>
+                  )}
                 </div>
 
                 {inference && (
