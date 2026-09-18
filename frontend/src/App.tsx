@@ -22,10 +22,30 @@ function App() {
   const [packetLoss, setPacketLoss] = useState(0);
   const [recoveryTime, setRecoveryTime] = useState("<50ms Sub-second Healing");
   const [activeKey, setActiveKey] = useState("0x8F92A1...");
+  const defaultNodes = [
+    { id: 'cmd', label: 'Command', x: '12%', y: '50%', status: 'trusted', icon: 'ShieldAlert' },
+    { id: 'a', label: 'Node A', x: '30%', y: '50%', status: 'trusted', icon: 'Network' },
+    { id: 'b', label: 'Node B (Relay)', x: '55%', y: '25%', status: 'trusted', icon: 'Activity' },
+    { id: 'd', label: 'Node D (Backup)', x: '55%', y: '75%', status: 'standby', icon: 'Radio' },
+    { id: 'c', label: 'Node C', x: '78%', y: '50%', status: 'trusted', icon: 'Network' },
+    { id: 'recon', label: 'Recon Unit', x: '92%', y: '50%', status: 'trusted', icon: 'Search' },
+    { id: 'rogue', label: 'Unknown Emitter', x: '30%', y: '15%', status: 'unauthorized', icon: 'Zap' }
+  ];
+
+  const defaultLinks = [
+    { id: 'cmd-a', source: 'cmd', target: 'a', status: 'active', latency: '8ms', bw: '10G' },
+    { id: 'a-b', source: 'a', target: 'b', status: 'active', latency: '12ms', bw: '10G' },
+    { id: 'b-c', source: 'b', target: 'c', status: 'active', latency: '9ms', bw: '10G' },
+    { id: 'a-d', source: 'a', target: 'd', status: 'standby', latency: '--', bw: '--' },
+    { id: 'd-c', source: 'd', target: 'c', status: 'standby', latency: '--', bw: '--' },
+    { id: 'c-recon', source: 'c', target: 'recon', status: 'active', latency: '14ms', bw: '10G' },
+    { id: 'rogue-a', source: 'rogue', target: 'a', status: 'blocked', latency: 'AUTH_FAIL', bw: '0G' }
+  ];
 
   const [ws, setWs] = useState<WebSocket | null>(null);
-  const [topologyNodes, setTopologyNodes] = useState<any[]>([]);
-  const [topologyLinks, setTopologyLinks] = useState<any[]>([]);
+  const [topologyNodes, setTopologyNodes] = useState<any[]>(defaultNodes);
+  const [topologyLinks, setTopologyLinks] = useState<any[]>(defaultLinks);
+  const [wsConnected, setWsConnected] = useState(false);
 
   // Idle key rotation
   useEffect(() => {
@@ -41,13 +61,23 @@ function App() {
 
   // WebSocket Connection
   useEffect(() => {
-    if (isAuthenticated) {
+    let socket: WebSocket | null = null;
+    let reconnectTimeout: any;
+
+    const connectWs = () => {
+      if (!isAuthenticated) return;
+      
       const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
       const wsHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
         ? '127.0.0.1:8001' 
         : 'nullmesh-defense.onrender.com';
       
-      const socket = new WebSocket(`${wsProtocol}//${wsHost}/api/v1/mesh/stream`);
+      socket = new WebSocket(`${wsProtocol}//${wsHost}/api/v1/mesh/stream`);
+      
+      socket.onopen = () => {
+        setWsConnected(true);
+      };
+
       socket.onmessage = (event) => {
         const data = JSON.parse(event.data);
         if (data.type === "MESH_STATE") {
@@ -61,9 +91,22 @@ function App() {
           setTestActive(data.telemetry.testActive);
         }
       };
+
+      socket.onclose = () => {
+        setWsConnected(false);
+        // Attempt to reconnect after 3 seconds
+        reconnectTimeout = setTimeout(connectWs, 3000);
+      };
+
       setWs(socket);
-      return () => socket.close();
-    }
+    };
+
+    connectWs();
+
+    return () => {
+      clearTimeout(reconnectTimeout);
+      if (socket) socket.close();
+    };
   }, [isAuthenticated]);
 
   const triggerResilienceTest = () => {
@@ -360,7 +403,12 @@ function App() {
                         </div>
                       </div>
                     </div>
-                    <div style={{display: 'flex', gap: '2rem', fontSize: '0.8rem', fontFamily: 'monospace'}}>
+                    <div style={{display: 'flex', gap: '2rem', fontSize: '0.8rem', fontFamily: 'monospace', alignItems: 'center'}}>
+                      {!wsConnected && (
+                        <div style={{color: 'var(--accent-amber)', animation: 'pulse 1.5s infinite'}}>
+                          [WAITING FOR C2 UPLINK...]
+                        </div>
+                      )}
                       <div><span style={{color: 'var(--text-muted)'}}>LATENCY:</span> <span style={{color: testActive && !nodesDisrupted ? 'var(--accent-red)' : 'var(--accent-green)'}}>&lt;{latency}ms</span></div>
                       <div><span style={{color: 'var(--text-muted)'}}>THROUGHPUT:</span> <span style={{color: testActive && !nodesDisrupted ? 'var(--accent-amber)' : 'var(--accent-green)'}}>{testActive && !nodesDisrupted ? '4.2Gbps' : '10Gbps'}</span></div>
                       <div><span style={{color: 'var(--text-muted)'}}>NODES:</span> <span style={{color: testActive && !nodesDisrupted ? 'var(--accent-red)' : 'var(--accent-cyan)'}}>{nodeCount.toLocaleString()}</span></div>
