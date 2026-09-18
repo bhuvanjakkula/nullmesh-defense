@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Activity, ShieldAlert, Radio, Search, CheckCircle, Network } from 'lucide-react';
+import { Activity, ShieldAlert, Radio, Search, CheckCircle, Network, Zap } from 'lucide-react';
+
+const IconMap: any = { Activity, ShieldAlert, Radio, Search, CheckCircle, Network, Zap };
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -40,6 +42,27 @@ function App() {
     return () => clearInterval(interval);
   }, [nodesDisrupted]);
 
+  // Graph Topology State
+  const [topologyNodes, setTopologyNodes] = useState<any[]>([
+    { id: 'cmd', label: 'Command', x: '12%', y: '50%', status: 'trusted', icon: 'ShieldAlert' },
+    { id: 'a', label: 'Node A', x: '30%', y: '50%', status: 'trusted', icon: 'Network' },
+    { id: 'b', label: 'Node B (Relay)', x: '55%', y: '25%', status: 'trusted', icon: 'Activity' },
+    { id: 'd', label: 'Node D (Backup)', x: '55%', y: '75%', status: 'standby', icon: 'Radio' },
+    { id: 'c', label: 'Node C', x: '78%', y: '50%', status: 'trusted', icon: 'Network' },
+    { id: 'recon', label: 'Recon Unit', x: '92%', y: '50%', status: 'trusted', icon: 'Search' },
+    { id: 'rogue', label: 'Unknown Emitter', x: '30%', y: '15%', status: 'unauthorized', icon: 'Zap' }
+  ]);
+
+  const [topologyLinks, setTopologyLinks] = useState<any[]>([
+    { id: 'cmd-a', source: 'cmd', target: 'a', status: 'active', latency: '8ms', bw: '10G' },
+    { id: 'a-b', source: 'a', target: 'b', status: 'active', latency: '12ms', bw: '10G' },
+    { id: 'b-c', source: 'b', target: 'c', status: 'active', latency: '9ms', bw: '10G' },
+    { id: 'a-d', source: 'a', target: 'd', status: 'standby', latency: '--', bw: '--' },
+    { id: 'd-c', source: 'd', target: 'c', status: 'standby', latency: '--', bw: '--' },
+    { id: 'c-recon', source: 'c', target: 'recon', status: 'active', latency: '14ms', bw: '10G' },
+    { id: 'rogue-a', source: 'rogue', target: 'a', status: 'blocked', latency: 'AUTH_FAIL', bw: '0G' }
+  ]);
+
   // Disruption Simulation Effects
   useEffect(() => {
     if (testActive && !nodesDisrupted) {
@@ -48,16 +71,48 @@ function App() {
       setPacketLoss(4.2);
       setNodeCount(prev => Math.floor(prev * 0.4));
       setRecoveryTime("CALCULATING...");
+      
+      setTopologyNodes(nodes => nodes.map(n => n.id === 'b' ? { ...n, status: 'offline', label: 'Node B (Lost)' } : n));
+      setTopologyLinks(links => links.map(l => {
+        if (l.id === 'a-b' || l.id === 'b-c') return { ...l, status: 'offline', latency: 'ERR', bw: '0G' };
+        if (l.id === 'a-d' || l.id === 'd-c') return { ...l, status: 'routing', latency: 'CALC', bw: '...' };
+        return l;
+      }));
     } else if (testActive && nodesDisrupted) {
       // After REROUTED
       setLatency(18);
       setPacketLoss(0);
       setNodeCount(prev => Math.floor(prev * 2.5));
       setRecoveryTime("<50ms (Healed)");
+      
+      setTopologyNodes(nodes => nodes.map(n => n.id === 'd' ? { ...n, status: 'trusted', label: 'Node D (Active)' } : n));
+      setTopologyLinks(links => links.map(l => {
+        if (l.id === 'a-d' || l.id === 'd-c') return { ...l, status: 'active', latency: '24ms', bw: '2.1G' };
+        return l;
+      }));
     } else {
       // Normal Reset
       setPacketLoss(0);
       setRecoveryTime("<50ms Sub-second Healing");
+      
+      setTopologyNodes([
+        { id: 'cmd', label: 'Command', x: '12%', y: '50%', status: 'trusted', icon: 'ShieldAlert' },
+        { id: 'a', label: 'Node A', x: '30%', y: '50%', status: 'trusted', icon: 'Network' },
+        { id: 'b', label: 'Node B (Relay)', x: '55%', y: '25%', status: 'trusted', icon: 'Activity' },
+        { id: 'd', label: 'Node D (Backup)', x: '55%', y: '75%', status: 'standby', icon: 'Radio' },
+        { id: 'c', label: 'Node C', x: '78%', y: '50%', status: 'trusted', icon: 'Network' },
+        { id: 'recon', label: 'Recon Unit', x: '92%', y: '50%', status: 'trusted', icon: 'Search' },
+        { id: 'rogue', label: 'Unknown Emitter', x: '30%', y: '15%', status: 'unauthorized', icon: 'Zap' }
+      ]);
+      setTopologyLinks([
+        { id: 'cmd-a', source: 'cmd', target: 'a', status: 'active', latency: '8ms', bw: '10G' },
+        { id: 'a-b', source: 'a', target: 'b', status: 'active', latency: '12ms', bw: '10G' },
+        { id: 'b-c', source: 'b', target: 'c', status: 'active', latency: '9ms', bw: '10G' },
+        { id: 'a-d', source: 'a', target: 'd', status: 'standby', latency: '--', bw: '--' },
+        { id: 'd-c', source: 'd', target: 'c', status: 'standby', latency: '--', bw: '--' },
+        { id: 'c-recon', source: 'c', target: 'recon', status: 'active', latency: '14ms', bw: '10G' },
+        { id: 'rogue-a', source: 'rogue', target: 'a', status: 'blocked', latency: 'AUTH_FAIL', bw: '0G' }
+      ]);
     }
   }, [testActive, nodesDisrupted]);
 
@@ -449,53 +504,92 @@ function App() {
 
                 <div className="panel mt-4" style={{border: '1px solid var(--border-color)', position: 'relative'}}>
                   <h2 style={{fontSize: '0.85rem', color: 'var(--text-muted)', letterSpacing: '1px', marginBottom: '1.5rem'}}>LIVE NETWORK TOPOLOGY MAP</h2>
-                  <div className="architecture-diagram" style={{margin: '0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative', height: '220px', background: '#050505', borderRadius: '8px', overflow: 'hidden'}}>
+                  <div className="architecture-diagram" style={{margin: '0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative', height: '300px', background: '#050505', borderRadius: '8px', overflow: 'hidden'}}>
                     {/* SVG Links */}
                     <svg style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1, pointerEvents: 'none'}}>
-                      {/* CMD to A */}
-                      <line x1="12%" y1="50%" x2="28%" y2="50%" className="arch-link-path" stroke="var(--accent-green)" strokeWidth="2" />
-                      {/* A to B (Primary) */}
-                      <line x1="28%" y1="50%" x2="50%" y2="25%" className={`arch-link-path ${nodesDisrupted ? 'disrupted' : ''}`} stroke={nodesDisrupted ? "var(--accent-red)" : "var(--accent-green)"} strokeWidth={nodesDisrupted ? "1" : "2"} />
-                      {/* A to D (Backup) */}
-                      <line x1="28%" y1="50%" x2="50%" y2="75%" className={`arch-link-path ${testActive && nodesDisrupted ? 'rerouted' : ''}`} stroke={testActive && nodesDisrupted ? "var(--accent-cyan)" : "#222"} strokeWidth="2" style={{animation: testActive && nodesDisrupted ? 'march 1s linear infinite' : 'none', strokeDasharray: testActive && nodesDisrupted ? '5,5' : 'none'}} />
-                      {/* B to C (Primary) */}
-                      <line x1="50%" y1="25%" x2="72%" y2="50%" className={`arch-link-path ${nodesDisrupted ? 'disrupted' : ''}`} stroke={nodesDisrupted ? "var(--accent-red)" : "var(--accent-green)"} strokeWidth={nodesDisrupted ? "1" : "2"} />
-                      {/* D to C (Backup) */}
-                      <line x1="50%" y1="75%" x2="72%" y2="50%" className={`arch-link-path ${testActive && nodesDisrupted ? 'rerouted' : ''}`} stroke={testActive && nodesDisrupted ? "var(--accent-cyan)" : "#222"} strokeWidth="2" style={{animation: testActive && nodesDisrupted ? 'march 1s linear infinite' : 'none', strokeDasharray: testActive && nodesDisrupted ? '5,5' : 'none'}} />
-                      {/* C to Recon */}
-                      <line x1="72%" y1="50%" x2="88%" y2="50%" className="arch-link-path" stroke="var(--accent-green)" strokeWidth="2" />
+                      {topologyLinks.map(link => {
+                        const source = topologyNodes.find(n => n.id === link.source);
+                        const target = topologyNodes.find(n => n.id === link.target);
+                        if (!source || !target) return null;
+                        
+                        let strokeColor = "var(--accent-green)";
+                        let strokeDash = "none";
+                        let strokeWidth = "2";
+                        let anim = "none";
+                        
+                        if (link.status === 'offline') { strokeColor = "var(--accent-red)"; strokeWidth = "1"; strokeDash = "5,5"; }
+                        else if (link.status === 'standby') { strokeColor = "#222"; }
+                        else if (link.status === 'blocked') { strokeColor = "var(--accent-amber)"; strokeDash = "2,4"; }
+                        else if (link.status === 'routing') { strokeColor = "var(--accent-cyan)"; strokeDash = "5,5"; anim = "march 0.5s linear infinite"; }
+                        else if (link.status === 'active' && link.id.includes('d')) { strokeColor = "var(--accent-cyan)"; strokeDash = "5,5"; anim = "march 1s linear infinite"; }
+                        
+                        return (
+                          <line key={link.id} x1={source.x} y1={source.y} x2={target.x} y2={target.y} stroke={strokeColor} strokeWidth={strokeWidth} strokeDasharray={strokeDash} style={{animation: anim}} />
+                        );
+                      })}
                     </svg>
 
+                    {/* Link Metric Badges */}
+                    {topologyLinks.map(link => {
+                      const source = topologyNodes.find(n => n.id === link.source);
+                      const target = topologyNodes.find(n => n.id === link.target);
+                      if (!source || !target) return null;
+                      
+                      let badgeColor = "var(--accent-green)";
+                      if (link.status === 'offline') badgeColor = "var(--accent-red)";
+                      else if (link.status === 'standby') badgeColor = "#444";
+                      else if (link.status === 'blocked') badgeColor = "var(--accent-amber)";
+                      else if (link.status === 'routing' || (link.status === 'active' && link.id.includes('d'))) badgeColor = "var(--accent-cyan)";
+                      
+                      return (
+                        <div key={`badge-${link.id}`} style={{
+                          position: 'absolute',
+                          left: `calc((${source.x} + ${target.x}) / 2)`,
+                          top: `calc((${source.y} + ${target.y}) / 2)`,
+                          transform: 'translate(-50%, -50%)',
+                          zIndex: 2,
+                          background: 'rgba(0,0,0,0.8)',
+                          border: `1px solid ${badgeColor}`,
+                          color: badgeColor,
+                          fontSize: '0.55rem',
+                          padding: '2px 4px',
+                          borderRadius: '4px',
+                          fontFamily: 'monospace',
+                          textAlign: 'center',
+                          whiteSpace: 'nowrap'
+                        }}>
+                          {link.latency}<br/>{link.bw}
+                        </div>
+                      );
+                    })}
+
                     {/* Nodes */}
-                    <div className="arch-node" style={{position: 'absolute', left: '12%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2, padding: '0.6rem', width: '80px', background: '#000', border: '1px solid var(--accent-green)'}}>
-                      <ShieldAlert size={20} color="var(--accent-green)" />
-                      <div style={{fontSize: '0.6rem', color: 'white', marginTop: '4px'}}>Command</div>
-                    </div>
-                    
-                    <div className="arch-node" style={{position: 'absolute', left: '28%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2, padding: '0.5rem', width: '60px', background: '#000', border: '1px solid var(--accent-green)'}}>
-                      <Network size={16} color="var(--accent-green)" />
-                      <div style={{fontSize: '0.6rem', color: 'white', marginTop: '4px'}}>Node A</div>
-                    </div>
-
-                    <div className={`arch-node ${nodesDisrupted ? 'disrupted' : ''}`} style={{position: 'absolute', left: '50%', top: '25%', transform: 'translate(-50%, -50%)', zIndex: 2, padding: '0.5rem', width: '80px', background: '#000', border: `1px solid ${nodesDisrupted ? 'var(--accent-red)' : 'var(--accent-green)'}`}}>
-                      <Activity size={16} color={nodesDisrupted ? "var(--accent-red)" : "var(--accent-green)"} />
-                      <div style={{fontSize: '0.6rem', color: 'white', marginTop: '4px'}}>{nodesDisrupted ? 'Node B (Lost)' : 'Node B (Relay)'}</div>
-                    </div>
-
-                    <div className={`arch-node ${testActive && nodesDisrupted ? 'active-relay' : ''}`} style={{position: 'absolute', left: '50%', top: '75%', transform: 'translate(-50%, -50%)', zIndex: 2, padding: '0.5rem', width: '80px', background: '#000', opacity: testActive && nodesDisrupted ? 1 : 0.5, border: `1px solid ${testActive && nodesDisrupted ? 'var(--accent-cyan)' : '#333'}`}}>
-                      <Radio size={16} color={testActive && nodesDisrupted ? "var(--accent-cyan)" : "#666"} />
-                      <div style={{fontSize: '0.6rem', color: 'white', marginTop: '4px'}}>Node D (Backup)</div>
-                    </div>
-
-                    <div className="arch-node" style={{position: 'absolute', left: '72%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2, padding: '0.5rem', width: '60px', background: '#000', border: '1px solid var(--accent-green)'}}>
-                      <Network size={16} color="var(--accent-green)" />
-                      <div style={{fontSize: '0.6rem', color: 'white', marginTop: '4px'}}>Node C</div>
-                    </div>
-
-                    <div className="arch-node" style={{position: 'absolute', left: '88%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2, padding: '0.6rem', width: '80px', background: '#000', border: '1px solid var(--accent-green)'}}>
-                      <Search size={20} color="var(--accent-green)" />
-                      <div style={{fontSize: '0.6rem', color: 'white', marginTop: '4px'}}>Recon Unit</div>
-                    </div>
+                    {topologyNodes.map(node => {
+                      const Icon = IconMap[node.icon];
+                      let borderColor = 'var(--accent-green)';
+                      let color = 'white';
+                      let opacity = 1;
+                      
+                      if (node.status === 'offline') {
+                        borderColor = 'var(--accent-red)';
+                        color = 'var(--accent-red)';
+                        opacity = 0.5;
+                      } else if (node.status === 'unauthorized') {
+                        borderColor = 'var(--accent-amber)';
+                        color = 'var(--accent-amber)';
+                      } else if (node.status === 'standby') {
+                        borderColor = '#333';
+                        color = '#666';
+                        opacity = 0.5;
+                      }
+                      
+                      return (
+                        <div key={node.id} className={`arch-node ${node.status}`} style={{position: 'absolute', left: node.x, top: node.y, transform: 'translate(-50%, -50%)', zIndex: 3, padding: '0.6rem', width: '80px', background: '#000', border: `1px solid ${borderColor}`, opacity, transition: 'all 0.3s'}}>
+                          <Icon size={16} color={borderColor} />
+                          <div style={{fontSize: '0.6rem', color: color, marginTop: '4px', textAlign: 'center'}}>{node.label}</div>
+                        </div>
+                      )
+                    })}
                   </div>
                   
                   {nodesDisrupted && (
