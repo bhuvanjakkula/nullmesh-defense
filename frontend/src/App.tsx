@@ -255,84 +255,62 @@ function App() {
                 for Modern Warfare.
               </h1>
               <p className="hero-subtitle stylistic-subtitle">
-                <strong style={{color: 'var(--accent-cyan)'}}>NULLMESH v2</strong> provides mathematical certainty for multi-domain operations. We guarantee secure, offline-capable, and resilient military communications that automatically reroute under severe electronic warfare and physical degradation.
+                <strong style={{color: 'var(--accent-cyan)'}}>NullMesh</strong> is a resilient communications and networking layer designed to maintain trusted information exchange among distributed defense nodes when conventional communications infrastructure is unavailable, degraded, or disconnected.
               </p>
             </section>
 
 
 
-            <section className="features-section" style={{padding: '0'}}>
-              <div className="features-grid">
-                <div className="feature-card">
-                  <Radio className="feature-icon" size={24} />
-                  <div>
-                    <h3 className="feature-title">Temporal Kill Web</h3>
-                    <p className="feature-desc">JADC2 synchronization guaranteed across Space, Cyber, and Sea domains. Ensures sequential dependency across all joint operations.</p>
-                  </div>
-                </div>
-                <div className="feature-card">
-                  <Search className="feature-icon" size={24} />
-                  <div>
-                    <h3 className="feature-title">Inverse CDT Inference</h3>
-                    <p className="feature-desc">Reverse-engineer classified enemy operations from partial battlefield observations using advanced mathematical deduction.</p>
-                  </div>
-                </div>
-                <div className="feature-card">
-                  <Cpu className="feature-icon" size={24} />
-                  <div>
-                    <h3 className="feature-title">Swarm Topology Repair</h3>
-                    <p className="feature-desc">Decentralized resilience. Mathematically guarantee seamless leader re-election if an EMP severs drone swarm communications.</p>
-                  </div>
-                </div>
+            <section className="defense-applications" style={{marginBottom: '3rem'}}>
+              <h2 style={{color: 'white', marginBottom: '1.5rem'}}>Strongest Defense Use Cases</h2>
+              <div className="usecase-grid" style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '1rem'}}>
                 <div className="feature-card">
                   <ShieldAlert className="feature-icon" size={24} />
-                  <div>
-                    <h3 className="feature-title">Deceptive EW Ghost Fleet</h3>
-                    <p className="feature-desc">Automated decoy generation. Schedule EW spoofing perfectly in-sync with evasive maneuvers to deceive hypersonic threats.</p>
-                  </div>
-                </div>
-                <div className="feature-card">
-                  <Zap className="feature-icon" size={24} />
-                  <div>
-                    <h3 className="feature-title">Quantum Entanglement Mesh</h3>
-                    <p className="feature-desc">Post-quantum cryptography simulation. Mathematically guarantee secure key distribution while automatically collapsing intercepted states.</p>
-                  </div>
-                </div>
-                <div className="feature-card">
-                  <Radio className="feature-icon" size={24} />
-                  <div>
-                    <h3 className="feature-title">Functional Redundancy</h3>
-                    <p className="feature-desc">Multi-path SATCOM and terrestrial backhaul resilience. Prevent single-point failure across critical communications links.</p>
-                  </div>
-                </div>
-                <div className="feature-card">
-                  <HardDrive className="feature-icon" size={24} />
-                  <div>
-                    <h3 className="feature-title">FPGA Hardware Hardening</h3>
-                    <p className="feature-desc">Zero-trust edge execution. Application-specific processor SoCs shrink the attack surface without relying on vulnerable cloud uplinks.</p>
-                  </div>
-                </div>
-                <div className="feature-card">
-                  <Activity className="feature-icon" size={24} />
-                  <div>
-                    <h3 className="feature-title">5G Microsegmentation</h3>
-                    <p className="feature-desc">Zero Trust Architecture. Continuous authentication and least-privilege access mathematically isolate network slices to mitigate DDoS and insider threats.</p>
-                  </div>
+                  <div><h3 className="feature-title">Soldiers</h3><p className="feature-desc">Secure local/team communications.</p></div>
                 </div>
                 <div className="feature-card">
                   <Network className="feature-icon" size={24} />
-                  <div>
-                    <h3 className="feature-title">Topology Optimization</h3>
-                    <p className="feature-desc">Partial-mesh structure validation. Mathematically prove cyber resilience under targeted node attacks, outperforming ring and tree topologies.</p>
-                  </div>
+                  <div><h3 className="feature-title">Border Posts</h3><p className="feature-desc">Networking remote positions.</p></div>
+                </div>
+                <div className="feature-card">
+                  <Activity className="feature-icon" size={24} />
+                  <div><h3 className="feature-title">Disaster Response</h3><p className="feature-desc">Communications when infrastructure fails.</p></div>
+                </div>
+                <div className="feature-card">
+                  <HardDrive className="feature-icon" size={24} />
+                  <div><h3 className="feature-title">Vehicles</h3><p className="feature-desc">Vehicle-to-unit data exchange.</p></div>
+                </div>
+                <div className="feature-card">
+                  <Radio className="feature-icon" size={24} />
+                  <div><h3 className="feature-title">UAVs</h3><p className="feature-desc">Communications and network relay.</p></div>
+                </div>
+                <div className="feature-card">
+                  <Search className="feature-icon" size={24} />
+                  <div><h3 className="feature-title">Sensors</h3><p className="feature-desc">Distributed sensor-data transport.</p></div>
+                </div>
+                <div className="feature-card">
+                  <Cpu className="feature-icon" size={24} />
+                  <div><h3 className="feature-title">Command Centers</h3><p className="feature-desc">Receive information from distributed nodes.</p></div>
                 </div>
                 <div className="feature-card">
                   <Share2 className="feature-icon" size={24} />
-                  <div>
-                    <h3 className="feature-title">Software-Defined Networks</h3>
-                    <p className="feature-desc">Decoupled control from data planes enables flexible, intelligent rerouting in military networks under severe disruption.</p>
-                  </div>
+                  <div><h3 className="feature-title">Naval Operations</h3><p className="feature-desc">Local resilient communications.</p></div>
                 </div>
+                <div className="feature-card">
+                  <Zap className="feature-icon" size={24} />
+                  <div><h3 className="feature-title">Cyber Operations</h3><p className="feature-desc">Segmented, authenticated node communication.</p></div>
+                </div>
+              </div>
+            </section>
+
+            <section className="roadmap-section" style={{marginBottom: '2rem'}}>
+              <h2 style={{color: 'white', marginBottom: '1.5rem'}}>Engineering Roadmap</h2>
+              <div style={{display: 'flex', flexDirection: 'column', gap: '1rem', background: '#0a0a0a', padding: '1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)'}}>
+                <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}><span style={{color: 'var(--accent-green)', fontWeight: 'bold'}}>PHASE 1</span> <span style={{color: 'var(--text-muted)'}}>Laptops/phones communicating locally without internet.</span></div>
+                <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}><span style={{color: 'var(--accent-cyan)', fontWeight: 'bold'}}>PHASE 2</span> <span style={{color: 'var(--text-muted)'}}>Automatic peer discovery and multi-hop communication.</span></div>
+                <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}><span style={{color: 'var(--accent-amber)', fontWeight: 'bold'}}>PHASE 3</span> <span style={{color: 'var(--text-muted)'}}>Encrypted and authenticated nodes.</span></div>
+                <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}><span style={{color: 'var(--accent-red)', fontWeight: 'bold'}}>PHASE 4</span> <span style={{color: 'white'}}>Hardware nodes operating over appropriate communications links.</span></div>
+                <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}><span style={{color: '#666', fontWeight: 'bold'}}>PHASE 5</span> <span style={{color: '#666'}}>Field testing with node failures and constrained connectivity.</span></div>
               </div>
             </section>
           </div>
@@ -514,34 +492,52 @@ function App() {
 
                 <div className="panel mt-4" style={{border: '1px solid var(--border-color)', position: 'relative'}}>
                   <h2 style={{fontSize: '0.85rem', color: 'var(--text-muted)', letterSpacing: '1px', marginBottom: '1.5rem'}}>LIVE NETWORK TOPOLOGY MAP</h2>
-                  <div className="architecture-diagram" style={{margin: '0'}}>
-                    <div className="arch-node" style={{width: '120px', padding: '0.75rem'}}>
-                      <ShieldAlert className="arch-node-icon" size={24} />
-                      <div className="arch-node-title" style={{fontSize: '0.7rem'}}>Command Center</div>
+                  <div className="architecture-diagram" style={{margin: '0', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative', height: '220px', background: '#050505', borderRadius: '8px', overflow: 'hidden'}}>
+                    {/* SVG Links */}
+                    <svg style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1, pointerEvents: 'none'}}>
+                      {/* CMD to A */}
+                      <line x1="12%" y1="50%" x2="28%" y2="50%" className="arch-link-path" stroke="var(--accent-green)" strokeWidth="2" />
+                      {/* A to B (Primary) */}
+                      <line x1="28%" y1="50%" x2="50%" y2="25%" className={`arch-link-path ${nodesDisrupted ? 'disrupted' : ''}`} stroke={nodesDisrupted ? "var(--accent-red)" : "var(--accent-green)"} strokeWidth={nodesDisrupted ? "1" : "2"} />
+                      {/* A to D (Backup) */}
+                      <line x1="28%" y1="50%" x2="50%" y2="75%" className={`arch-link-path ${testActive && nodesDisrupted ? 'rerouted' : ''}`} stroke={testActive && nodesDisrupted ? "var(--accent-cyan)" : "#222"} strokeWidth="2" style={{animation: testActive && nodesDisrupted ? 'march 1s linear infinite' : 'none', strokeDasharray: testActive && nodesDisrupted ? '5,5' : 'none'}} />
+                      {/* B to C (Primary) */}
+                      <line x1="50%" y1="25%" x2="72%" y2="50%" className={`arch-link-path ${nodesDisrupted ? 'disrupted' : ''}`} stroke={nodesDisrupted ? "var(--accent-red)" : "var(--accent-green)"} strokeWidth={nodesDisrupted ? "1" : "2"} />
+                      {/* D to C (Backup) */}
+                      <line x1="50%" y1="75%" x2="72%" y2="50%" className={`arch-link-path ${testActive && nodesDisrupted ? 'rerouted' : ''}`} stroke={testActive && nodesDisrupted ? "var(--accent-cyan)" : "#222"} strokeWidth="2" style={{animation: testActive && nodesDisrupted ? 'march 1s linear infinite' : 'none', strokeDasharray: testActive && nodesDisrupted ? '5,5' : 'none'}} />
+                      {/* C to Recon */}
+                      <line x1="72%" y1="50%" x2="88%" y2="50%" className="arch-link-path" stroke="var(--accent-green)" strokeWidth="2" />
+                    </svg>
+
+                    {/* Nodes */}
+                    <div className="arch-node" style={{position: 'absolute', left: '12%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2, padding: '0.6rem', width: '80px', background: '#000', border: '1px solid var(--accent-green)'}}>
+                      <ShieldAlert size={20} color="var(--accent-green)" />
+                      <div style={{fontSize: '0.6rem', color: 'white', marginTop: '4px'}}>Command</div>
                     </div>
                     
-                    <div className="arch-links-container" style={{left: '120px', right: '120px'}}>
-                      <svg className="arch-link-svg" preserveAspectRatio="none" style={{width: '100%', height: '100%'}}>
-                        <path d="M 0 50 Q 150 10 300 50" className={`arch-link-path ${nodesDisrupted ? 'disrupted' : ''}`} />
-                        <path d="M 0 50 L 300 50" className={`arch-link-path ${nodesDisrupted ? 'disrupted' : ''}`} />
-                        <path d="M 0 50 Q 150 120 300 50" className={`arch-link-path ${nodesDisrupted ? 'rerouted' : ''}`} style={{display: testActive ? 'block' : 'none'}} />
-                      </svg>
+                    <div className="arch-node" style={{position: 'absolute', left: '28%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2, padding: '0.5rem', width: '60px', background: '#000', border: '1px solid var(--accent-green)'}}>
+                      <Network size={16} color="var(--accent-green)" />
+                      <div style={{fontSize: '0.6rem', color: 'white', marginTop: '4px'}}>Node A</div>
                     </div>
-                    
-                    <div style={{display: 'flex', flexDirection: 'column', gap: '1rem', zIndex: 2}}>
-                      <div className={`arch-node ${nodesDisrupted ? 'disrupted' : ''}`} style={{padding: '0.5rem', width: '80px'}}>
-                        <Network className="arch-node-icon" size={20} />
-                        <div className="arch-node-title" style={{fontSize: '0.55rem'}}>Alpha Mesh</div>
-                      </div>
-                      <div className={`arch-node ${nodesDisrupted ? 'disrupted' : ''}`} style={{padding: '0.5rem', width: '80px'}}>
-                        <Network className="arch-node-icon" size={20} />
-                        <div className="arch-node-title" style={{fontSize: '0.55rem'}}>Bravo Mesh</div>
-                      </div>
+
+                    <div className={`arch-node ${nodesDisrupted ? 'disrupted' : ''}`} style={{position: 'absolute', left: '50%', top: '25%', transform: 'translate(-50%, -50%)', zIndex: 2, padding: '0.5rem', width: '80px', background: '#000', border: `1px solid ${nodesDisrupted ? 'var(--accent-red)' : 'var(--accent-green)'}`}}>
+                      <Activity size={16} color={nodesDisrupted ? "var(--accent-red)" : "var(--accent-green)"} />
+                      <div style={{fontSize: '0.6rem', color: 'white', marginTop: '4px'}}>{nodesDisrupted ? 'Node B (Lost)' : 'Node B (Relay)'}</div>
                     </div>
-                    
-                    <div className="arch-node" style={{width: '120px', padding: '0.75rem'}}>
-                      <Radio className="arch-node-icon" size={24} />
-                      <div className="arch-node-title" style={{fontSize: '0.7rem'}}>Tactical Edge</div>
+
+                    <div className={`arch-node ${testActive && nodesDisrupted ? 'active-relay' : ''}`} style={{position: 'absolute', left: '50%', top: '75%', transform: 'translate(-50%, -50%)', zIndex: 2, padding: '0.5rem', width: '80px', background: '#000', opacity: testActive && nodesDisrupted ? 1 : 0.5, border: `1px solid ${testActive && nodesDisrupted ? 'var(--accent-cyan)' : '#333'}`}}>
+                      <Radio size={16} color={testActive && nodesDisrupted ? "var(--accent-cyan)" : "#666"} />
+                      <div style={{fontSize: '0.6rem', color: 'white', marginTop: '4px'}}>Node D (Backup)</div>
+                    </div>
+
+                    <div className="arch-node" style={{position: 'absolute', left: '72%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2, padding: '0.5rem', width: '60px', background: '#000', border: '1px solid var(--accent-green)'}}>
+                      <Network size={16} color="var(--accent-green)" />
+                      <div style={{fontSize: '0.6rem', color: 'white', marginTop: '4px'}}>Node C</div>
+                    </div>
+
+                    <div className="arch-node" style={{position: 'absolute', left: '88%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2, padding: '0.6rem', width: '80px', background: '#000', border: '1px solid var(--accent-green)'}}>
+                      <Search size={20} color="var(--accent-green)" />
+                      <div style={{fontSize: '0.6rem', color: 'white', marginTop: '4px'}}>Recon Unit</div>
                     </div>
                   </div>
                   
