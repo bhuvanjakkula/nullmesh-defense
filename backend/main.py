@@ -8,6 +8,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 import uvicorn
 
+import sys
+from pathlib import Path
+
+# Ensure backend root directory is on sys.path for serverless execution
+backend_dir = str(Path(__file__).parent.resolve())
+if backend_dir not in sys.path:
+    sys.path.insert(0, backend_dir)
+
 from api import run_cdt, explain_break, repair_report
 from engine import killer_demo_contracts, killer_invariants, reserve_once
 from scenarios import late_scenario, reserve_collision

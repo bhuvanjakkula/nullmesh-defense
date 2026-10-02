@@ -5,10 +5,8 @@
       "root": "."
     },
     "backend": {
-      "root": "backend"
-    },
-    "nullmesh": {
-      "root": "nullmesh-core/nullmesh"
+      "root": "backend",
+      "entrypoint": "main:app"
     }
   },
   "rewrites": [
