@@ -106,7 +106,8 @@ document.addEventListener("DOMContentLoaded", () => {
     btnSignOut.addEventListener("click", () => {
       sessionStorage.removeItem("nullmesh_authenticated_user");
       localStorage.removeItem("nullmesh_active_user");
-      window.location.href = "/signin.html";
+      localStorage.removeItem("token");
+      window.location.replace("/signin.html");
     });
   }
 
@@ -119,9 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
   } else if (activeToken === "nullmesh_owner_bhuvan_jwt_token_999") {
     if (topUserEmail) topUserEmail.textContent = "bhuvanjakkula@gmail.com";
   } else {
-    if (window.location.pathname.includes("dashboard")) {
-      window.location.href = "/signin.html";
-    }
+    window.location.replace("/signin.html");
   }
 
   // --- VIEW NAVIGATION CONTROLLER ---

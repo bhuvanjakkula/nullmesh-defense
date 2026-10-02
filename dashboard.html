@@ -12,11 +12,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="/css/tactical.css">
+    <script>
+      (function() {
+        var user = sessionStorage.getItem("nullmesh_authenticated_user") || localStorage.getItem("nullmesh_active_user");
+        var token = localStorage.getItem("token");
+        if (!user && token !== "nullmesh_owner_bhuvan_jwt_token_999") {
+          window.location.replace("/signin.html");
+        }
+      })();
+    </script>
   </head>
   <body>
 
     <!-- ======================================================== -->
-    <!-- TOP NAVIGATION: SWITCH SEPARATELY BETWEEN ALL 3 PAGES   -->
+    <!-- TOP NAVIGATION                                           -->
     <!-- ======================================================== -->
     <div style="background:rgba(6,10,22,0.95); border-bottom:1px solid rgba(0,243,255,0.25); padding:8px 24px; display:flex; justify-content:space-between; align-items:center; backdrop-filter:blur(12px); position:sticky; top:0; z-index:100000;">
       <div style="display:flex; align-items:center; gap:10px;">
@@ -27,18 +36,15 @@
       </div>
 
       <nav style="display:flex; gap:10px; align-items:center;">
-        <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--text-dim); margin-right:4px;">
-          SEPARATE WEB PAGES:
-        </span>
-        <a href="/signin.html" style="text-decoration:none; padding:5px 12px; border-radius:6px; font-family:var(--font-mono); font-size:0.72rem; font-weight:700; border:1px solid rgba(255,255,255,0.1); color:var(--text-dim); display:flex; align-items:center; gap:6px;">
-          🔑 1. SIGN IN PAGE
-        </a>
         <a href="/payment.html" style="text-decoration:none; padding:5px 12px; border-radius:6px; font-family:var(--font-mono); font-size:0.72rem; font-weight:700; border:1px solid rgba(255,255,255,0.1); color:var(--text-dim); display:flex; align-items:center; gap:6px;">
-          💳 2. PAYMENT & SUBSCRIPTION PAGE
+          💳 SUBSCRIPTIONS & PLANS
         </a>
         <a href="/dashboard.html" style="text-decoration:none; padding:5px 12px; border-radius:6px; font-family:var(--font-mono); font-size:0.72rem; font-weight:700; border:1px solid var(--accent-cyan); background:rgba(0,243,255,0.2); color:var(--accent-cyan); box-shadow:0 0 10px rgba(0,243,255,0.3); display:flex; align-items:center; gap:6px;">
-          ⚡ 3. MAIN FUNCTION WEB PAGE (CURRENT)
+          ⚡ COMMAND TERMINAL (ACTIVE)
         </a>
+        <button id="btnTopSignOut" onclick="sessionStorage.removeItem('nullmesh_authenticated_user'); localStorage.removeItem('nullmesh_active_user'); localStorage.removeItem('token'); window.location.replace('/signin.html');" style="background:transparent; cursor:pointer; text-decoration:none; padding:5px 12px; border-radius:6px; font-family:var(--font-mono); font-size:0.72rem; font-weight:700; border:1px solid #ff4444; color:#ff6666; display:flex; align-items:center; gap:6px;">
+          🔒 SIGN OUT
+        </button>
       </nav>
     </div>
 
