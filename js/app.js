@@ -55,7 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
     sessionStorage.setItem("nullmesh_authenticated_user", email);
 
     // Call backend auth API asynchronously to register active session token
-    fetch("http://127.0.0.1:8001/api/v1/auth/login", {
+    const apiBase = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") && window.location.port !== "8001" ? "http://127.0.0.1:8001" : "";
+    fetch(apiBase + "/api/v1/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: email, password: "" })
@@ -607,11 +608,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const agentName = document.getElementById("payAgentName").value;
 
       // Submit to backend
-      fetch("http://127.0.0.1:8001/api/v1/billing/checkout", {
+      const apiBase = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") && window.location.port !== "8001" ? "http://127.0.0.1:8001" : "";
+      fetch(apiBase + "/api/v1/billing/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: "bhuvanjakkula@gmail.com",
+          email: sessionStorage.getItem("nullmesh_authenticated_user") || "bhuvanjakkula@gmail.com",
           tier: "commandant",
           payment_method: payMethod
         })

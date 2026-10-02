@@ -100,15 +100,15 @@ class CheckoutRequest(BaseModel):
 @app.get("/api/v1/billing/status")
 def billing_status(email: Optional[str] = OWNER_EMAIL):
     user_email = (email or OWNER_EMAIL).lower().strip()
-    is_owner = (user_email == OWNER_EMAIL)
+    is_owner = (user_email == OWNER_EMAIL.lower())
 
     return {
         "user": user_email,
         "subscription_active": True,
-        "plan_name": "DEFENSE COMMANDANT MAX // SOVEREIGN ENCLAVE" if is_owner else "TACTICAL OPERATOR",
-        "billing_amount": "$0.00 / month (Authorized Defense Clearance)" if is_owner else "$49.00 / month",
+        "plan_name": "DEFENSE COMMANDANT MAX // SOVEREIGN ENCLAVE" if is_owner else "SME TACTICAL",
+        "billing_amount": "$0.00 / month (Authorized Defense Clearance)" if is_owner else "$14,999.00 / month",
         "renewal_date": "LIFETIME (NO EXPIRATION)" if is_owner else "2026-11-02",
-        "payment_method": "Direct Defense Protocol Clearance" if is_owner else "Visa ending in •••• 4242",
+        "payment_method": "Direct Defense Protocol Clearance" if is_owner else "Stripe Verified Corporate Billing",
         "status": "active",
         "features": [
             "Full Multi-Domain Access (Space, Air, Sea, Land)",
@@ -140,9 +140,12 @@ def billing_status(email: Optional[str] = OWNER_EMAIL):
 @app.post("/api/v1/billing/checkout")
 def billing_checkout(req: CheckoutRequest):
     user_email = (req.email or OWNER_EMAIL).lower().strip()
-    is_owner = (user_email == OWNER_EMAIL)
+    is_owner = (user_email == OWNER_EMAIL.lower())
     import uuid
     inv_id = f"INV-2026-{uuid.uuid4().hex[:6].upper()}"
+
+    amount = "$0.00" if is_owner else ("$250,000.00" if req.tier == "enterprise" else ("$89,999.00" if req.tier == "commandant" else "$14,999.00"))
+    stripe_link = "https://buy.stripe.com/test_8x2dR1cxM7pX4qP1VY2oE01" if req.tier == "commandant" else ("https://buy.stripe.com/test_7sYaEP2XcfWt8H5eIK2oE03" if req.tier == "enterprise" else "https://buy.stripe.com/test_cNidR12XcdOl7D14462oE02")
 
     return {
         "status": "success",
@@ -150,7 +153,8 @@ def billing_checkout(req: CheckoutRequest):
         "invoice_id": inv_id,
         "tier": req.tier,
         "user": user_email,
-        "amount_charged": "$0.00" if is_owner else ("$299.00" if req.tier == "commander" else "$49.00"),
+        "amount_charged": amount,
+        "stripe_checkout_url": stripe_link,
         "receipt_hash": uuid.uuid4().hex
     }
 
