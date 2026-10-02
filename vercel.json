@@ -2,21 +2,12 @@
   "version": 2,
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/dashboard", "destination": "/dashboard.html" },
-    { "source": "/payment", "destination": "/payment.html" },
-    { "source": "/signin", "destination": "/signin.html" },
-    { "source": "/v0", "destination": "/index.v0.html" }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
-      ]
-    }
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/payment", "dest": "/payment.html" },
+    { "src": "/signin", "dest": "/signin.html" },
+    { "src": "/dashboard", "dest": "/dashboard.html" },
+    { "src": "/v0", "dest": "/index.v0.html" },
+    { "src": "/", "dest": "/index.html" }
   ]
 }
