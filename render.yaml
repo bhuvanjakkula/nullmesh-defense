@@ -1,0 +1,40 @@
+services:
+  # Render Web Service for FastAPI Backend & WebSocket Stream
+  - type: web
+    name: nullmesh-defense-backend
+    env: python
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: OWNER_EMAIL
+        value: bhuvanjakkula@gmail.com
+
+  # Render Static Site for Frontend
+  - type: web
+    name: nullmesh-defense-frontend
+    env: static
+    region: oregon
+    plan: free
+    buildCommand: ""
+    staticPublishPath: .
+    routes:
+      - type: rewrite
+        source: /
+        destination: /signin.html
+      - type: rewrite
+        source: /signin
+        destination: /signin.html
+      - type: rewrite
+        source: /payment
+        destination: /payment.html
+      - type: rewrite
+        source: /dashboard
+        destination: /dashboard.html
+      - type: rewrite
+        source: /v0
+        destination: /index.v0.html

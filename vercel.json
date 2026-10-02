@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/", "destination": "/signin.html" },
+    { "source": "/signin", "destination": "/signin.html" },
+    { "source": "/payment", "destination": "/payment.html" },
+    { "source": "/dashboard", "destination": "/dashboard.html" },
+    { "source": "/v0", "destination": "/index.v0.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
+      ]
+    }
+  ]
+}

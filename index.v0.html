@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NULLMESH DEFENSE V0 // Full Vercel Suite</title>
+    <script type="module" crossorigin src="/assets/index-BkrXNBzm.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-D--4AWRf.css">
+    <style>
+      .v0-floating-bar {
+        position: fixed;
+        top: 12px;
+        left: 16px;
+        z-index: 999999;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(10, 16, 32, 0.94);
+        border: 1px solid rgba(0, 243, 255, 0.4);
+        border-radius: 8px;
+        padding: 6px 14px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+        font-family: 'Roboto Mono', monospace;
+      }
+      .v0-btn {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #8b9eb5;
+        font-family: inherit;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s ease;
+      }
+      .v0-btn:hover {
+        color: #fff;
+        border-color: #00f3ff;
+      }
+      .v0-btn.active {
+        background: rgba(0, 243, 255, 0.2);
+        border-color: #00f3ff;
+        color: #00f3ff;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Floating Navigation & State Controller for Vercel Bundle -->
+    <div class="v0-floating-bar">
+      <span style="font-size:11px; color:#00f3ff; font-weight:700;">VERCEL MODES:</span>
+      
+      <button class="v0-btn" id="btnModeSignIn" title="Show Original Vercel Sign-In Landing">
+        🔑 SIGN IN
+      </button>
+
+      <button class="v0-btn" id="btnModePayment" title="Show Original Vercel Stripe Payment & Plans">
+        💳 PAYMENT & STRIPE PLANS
+      </button>
+
+      <button class="v0-btn" id="btnModeTerminal" title="Show Original Vercel Terminal with Node D Failover">
+        ⚡ TACTICAL TERMINAL
+      </button>
+
+      <span style="color:#475569;">|</span>
+
+      <a href="/signin.html" class="v0-btn">
+        SEPARATE SIGN IN PAGE ➔
+      </a>
+
+      <a href="/payment.html" class="v0-btn" style="border-color:#00f59b; color:#00f59b;">
+        SEPARATE PAYMENT PAGE ➔
+      </a>
+
+      <a href="/dashboard.html" class="v0-btn" style="border-color:#00f3ff; color:#00f3ff;">
+        MAIN FUNCTION PLATFORM ➔
+      </a>
+    </div>
+
+    <div id="root"></div>
+
+    <script>
+      // Mode 1: Sign In
+      document.getElementById("btnModeSignIn").addEventListener("click", () => {
+        localStorage.removeItem("token");
+        window.location.reload();
+      });
+
+      // Mode 2: Payment & Plans (Access Denied with Stripe links)
+      document.getElementById("btnModePayment").addEventListener("click", () => {
+        // Set token, but no subscription in backend response simulation
+        localStorage.setItem("token", "unsubscribed_test_token");
+        fetch("http://127.0.0.1:8001/api/v1/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: "guest@defense.gov", password: "" })
+        }).finally(() => {
+          // If already signed in, simulate c && !u by setting token and reload
+          window.location.reload();
+        });
+      });
+
+      // Mode 3: Terminal with Node D failover (bhuvanjakkula@gmail.com full access)
+      document.getElementById("btnModeTerminal").addEventListener("click", () => {
+        localStorage.setItem("token", "nullmesh_owner_bhuvan_jwt_token_999");
+        window.location.reload();
+      });
+    </script>
+  </body>
+</html>

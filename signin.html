@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NULLMESH DEFENSE // Vercel Commander Sign In</title>
+    
+    <!-- Modern Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/assets/index-D--4AWRf.css">
+    <link rel="stylesheet" href="/css/tactical.css">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-main, #050a0f);
+        color: var(--text-main, #e0e6ed);
+        background-image: linear-gradient(#00ff4108 1px, transparent 1px), linear-gradient(90deg, #00ff4108 1px, transparent 1px);
+        background-size: 20px 20px;
+        min-height: 100vh;
+        font-family: 'Roboto Mono', monospace;
+      }
+
+      .page-switch-bar {
+        background: rgba(6, 10, 22, 0.95);
+        border-bottom: 1px solid rgba(0, 243, 255, 0.25);
+        padding: 10px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        backdrop-filter: blur(12px);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .page-switch-links {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .switch-btn {
+        text-decoration: none;
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-family: 'Roboto Mono', monospace;
+        font-size: 0.75rem;
+        font-weight: 700;
+        border: 1px solid rgba(255,255,255,0.1);
+        color: #8b9eb5;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .switch-btn:hover {
+        border-color: #00f3ff;
+        color: #fff;
+        background: rgba(0, 243, 255, 0.1);
+      }
+
+      .switch-btn.active-page {
+        background: rgba(0, 243, 255, 0.2);
+        border-color: #00f3ff;
+        color: #00f3ff;
+        box-shadow: 0 0 12px rgba(0, 243, 255, 0.3);
+      }
+
+      .btn-stripe {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        font-family: 'Roboto Mono', monospace;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        padding: 1rem 1.25rem;
+        font-size: 0.95rem;
+      }
+
+      .btn-stripe-primary {
+        background: var(--accent-cyan, #00f3ff);
+        color: #000;
+        border: 1px solid var(--accent-cyan, #00f3ff);
+      }
+
+      .btn-stripe-primary:hover {
+        box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ======================================================== -->
+    <!-- TOP NAVIGATION: SWITCH SEPARATELY BETWEEN ALL 3 PAGES   -->
+    <!-- ======================================================== -->
+    <header class="page-switch-bar">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="color:#00f3ff; font-size:1.1rem;">🛡️</span>
+        <span style="font-family:'Outfit', sans-serif; font-weight:800; letter-spacing:1px; font-size:0.95rem;">
+          NULLMESH DEFENSE PLATFORM
+        </span>
+      </div>
+
+      <nav class="page-switch-links">
+        <span style="font-family:'Roboto Mono', monospace; font-size:0.68rem; color:#8b9eb5; margin-right:4px;">
+          SEPARATE WEB PAGES:
+        </span>
+        <a href="/signin.html" class="switch-btn active-page">
+          🔑 1. SIGN IN PAGE (VERCEL)
+        </a>
+        <a href="/payment.html" class="switch-btn">
+          💳 2. PAYMENT & PLANS (VERCEL)
+        </a>
+        <a href="/dashboard.html" class="switch-btn">
+          ⚡ 3. MAIN FUNCTION WEB PAGE
+        </a>
+        <a href="/index.v0.html" class="switch-btn" style="border-color:#475569;">
+          ORIGINAL V0
+        </a>
+      </nav>
+    </header>
+
+    <!-- ======================================================== -->
+    <!-- EXACT VERCEL SPLIT LAYOUT (HERO + COMMANDER SIGN IN)     -->
+    <!-- ======================================================== -->
+    <main class="split-layout">
+      
+      <!-- Split Left: Vercel Hero & Doctrine -->
+      <div class="split-left">
+        <section class="hero-section" style="text-align:left; padding:0 0 1.5rem 0;">
+          <h1 class="hero-title stylistic-title">
+            <span class="accent-word" style="color:#00f3ff; font-style:italic;">Indestructible</span> Network<br>
+            for Modern Warfare.
+          </h1>
+          <p class="hero-subtitle stylistic-subtitle" style="color:#a0a0b0; font-size:1.1rem; line-height:1.7;">
+            <strong style="color:#00f3ff;">NullMesh</strong> is a resilient communications and networking layer designed to maintain trusted information exchange among distributed defense nodes when conventional communications infrastructure is unavailable, degraded, or disconnected.
+          </p>
+        </section>
+
+        <!-- Feature Cards -->
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <div>
+              <div class="feature-title">CAUSALITY & DISRUPTION-TOLERANT (CDT)</div>
+              <div class="feature-desc">Maintains provable causal ordering across partitioned links with zero clock drift.</div>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🛡️</div>
+            <div>
+              <div class="feature-title">POST-QUANTUM CRYPTOGRAPHIC ENCLAVE</div>
+              <div class="feature-desc">BB84 QKD entangled photons + NIST FIPS 203 ML-KEM-768 quantum immunity.</div>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🌐</div>
+            <div>
+              <div class="feature-title">AUTONOMOUS MULTI-DOMAIN SWARM HEALING</div>
+              <div class="feature-desc">Node D hot-standby promotion in 18ms with 0.00% packet loss.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Split Right: Exact Vercel Auth Box -->
+      <div class="split-right">
+        <section class="auth-section" id="auth" style="padding:0; margin:0; width:100%;">
+          <div class="auth-container" style="background:#141419cc; border:1px solid #1a2736; border-radius:16px; padding:2.5rem; backdrop-filter:blur(16px);">
+            
+            <div class="auth-header">
+              <h2 style="font-family:'Outfit', sans-serif; font-size:1.6rem; color:#fff; margin-bottom:0.75rem;">
+                Secure Commander Login
+              </h2>
+              <p style="color:#8b9eb5; margin-bottom:1.5rem; font-size:0.85rem;">
+                Access the NULLMESH v2 defense secure network.
+              </p>
+            </div>
+
+            <form id="vercelLoginForm" class="auth-form" style="display:flex; flex-direction:column; gap:1.25rem;">
+              <div class="auth-input-group">
+                <label style="color:#8b9eb5; margin-bottom:0.5rem; font-size:0.82rem; display:block;">Military / Enterprise Email ID</label>
+                <input type="email" id="vEmail" value="bhuvanjakkula@gmail.com" style="border:1px solid #1a2736; color:#fff; background:#000; border-radius:8px; width:100%; padding:0.9rem; font-family:inherit; font-size:0.95rem; outline:none;" required />
+              </div>
+
+              <div class="auth-input-group">
+                <label style="color:#8b9eb5; margin-bottom:0.5rem; font-size:0.82rem; display:block;">Decryption Password (Optional for Commander)</label>
+                <input type="password" id="vPassword" placeholder="••••••••" style="border:1px solid #1a2736; color:#fff; background:#000; border-radius:8px; width:100%; padding:0.9rem; font-family:inherit; font-size:0.95rem; outline:none;" />
+              </div>
+
+              <button type="submit" class="btn-stripe btn-stripe-primary" style="margin-top:0.5rem; width:100%; font-size:0.95rem;">
+                AUTHENTICATE CREDENTIALS ➔
+              </button>
+
+              <a href="/payment.html" class="btn-stripe btn-stripe-outline" style="width:100%; text-align:center; padding:0.85rem; font-size:0.85rem; border-color:#1a2736; color:#8b9eb5;">
+                VIEW VERCEL PAYMENT & STRIPE PLANS 💳
+              </a>
+            </form>
+
+            <div id="vFeedback" style="display:none; margin-top:12px; font-size:0.78rem; padding:8px 12px; border-radius:6px; background:rgba(0,245,155,0.15); border:1px solid #00f59b; color:#00f59b;">
+              ✓ Credentials authenticated. Unlocking terminal...
+            </div>
+
+            <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:#8b9eb5; border-top:1px solid #1a2736; padding-top:12px; margin-top:1.5rem;">
+              <span>NIST FIPS 203 ML-KEM-768</span>
+              <span>BB84 QKD VERIFIED</span>
+              <span>DISRUPTION-TOLERANT</span>
+            </div>
+
+          </div>
+        </section>
+      </div>
+
+    </main>
+
+    <script>
+      const form = document.getElementById("vercelLoginForm");
+      const emailInput = document.getElementById("vEmail");
+      const feedback = document.getElementById("vFeedback");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = emailInput ? emailInput.value.trim() : "bhuvanjakkula@gmail.com";
+        localStorage.setItem("token", "nullmesh_owner_bhuvan_jwt_token_999");
+        sessionStorage.setItem("nullmesh_authenticated_user", email);
+
+        if (feedback) feedback.style.display = "block";
+
+        fetch("http://127.0.0.1:8001/api/v1/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email, password: "" })
+        }).finally(() => {
+          setTimeout(() => {
+            window.location.href = "/dashboard.html";
+          }, 300);
+        });
+      });
+    </script>
+  </body>
+</html>

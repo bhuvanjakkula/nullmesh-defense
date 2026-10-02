@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NULLMESH DEFENSE // Vercel Subscription, Payment & Plans Layer</title>
+    
+    <!-- Modern Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/assets/index-D--4AWRf.css">
+    <link rel="stylesheet" href="/css/tactical.css">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-main, #050a0f);
+        color: var(--text-main, #e0e6ed);
+        background-image: linear-gradient(#00ff4108 1px, transparent 1px), linear-gradient(90deg, #00ff4108 1px, transparent 1px);
+        background-size: 20px 20px;
+        min-height: 100vh;
+        font-family: 'Roboto Mono', monospace;
+      }
+
+      /* Global Top Navigation Between The 3 Separated Pages */
+      .page-switch-bar {
+        background: rgba(6, 10, 22, 0.95);
+        border-bottom: 1px solid rgba(0, 243, 255, 0.25);
+        padding: 10px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        backdrop-filter: blur(12px);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .page-switch-links {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .switch-btn {
+        text-decoration: none;
+        padding: 6px 14px;
+        border-radius: 6px;
+        font-family: 'Roboto Mono', monospace;
+        font-size: 0.75rem;
+        font-weight: 700;
+        border: 1px solid rgba(255,255,255,0.1);
+        color: #8b9eb5;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .switch-btn:hover {
+        border-color: #00f3ff;
+        color: #fff;
+        background: rgba(0, 243, 255, 0.1);
+      }
+
+      .switch-btn.active-page {
+        background: rgba(0, 243, 255, 0.2);
+        border-color: #00f3ff;
+        color: #00f3ff;
+        box-shadow: 0 0 12px rgba(0, 243, 255, 0.3);
+      }
+
+      .payment-page-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      /* Exact Vercel Button & Card Styles */
+      .btn-stripe {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        font-family: 'Roboto Mono', monospace;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        padding: 1rem 1.25rem;
+        font-size: 0.95rem;
+      }
+
+      .btn-stripe-primary {
+        background: var(--accent-red, #f33);
+        color: #fff;
+        border: 1px solid var(--accent-red, #f33);
+      }
+
+      .btn-stripe-primary:hover {
+        box-shadow: 0 0 20px rgba(255, 51, 51, 0.5);
+        transform: translateY(-2px);
+      }
+
+      .btn-stripe-outline {
+        background: transparent;
+        color: #fff;
+        border: 1px solid var(--border-color, #1a2736);
+      }
+
+      .btn-stripe-outline:hover {
+        background: rgba(255,255,255,0.08);
+        transform: translateY(-2px);
+      }
+
+      .vercel-pricing-card {
+        background: #141419cc;
+        border: 1px solid var(--border-color, #1a2736);
+        border-radius: 12px;
+        padding: 2.5rem;
+        backdrop-filter: blur(12px);
+        position: relative;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ======================================================== -->
+    <!-- TOP NAVIGATION: SWITCH SEPARATELY BETWEEN ALL 3 PAGES   -->
+    <!-- ======================================================== -->
+    <header class="page-switch-bar">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="color:#00f3ff; font-size:1.1rem;">🛡️</span>
+        <span style="font-family:'Outfit', sans-serif; font-weight:800; letter-spacing:1px; font-size:0.95rem;">
+          NULLMESH DEFENSE PLATFORM
+        </span>
+      </div>
+
+      <nav class="page-switch-links">
+        <span style="font-family:'Roboto Mono', monospace; font-size:0.68rem; color:#8b9eb5; margin-right:4px;">
+          SEPARATE WEB PAGES:
+        </span>
+        <a href="/signin.html" class="switch-btn">
+          🔑 1. SIGN IN PAGE
+        </a>
+        <a href="/payment.html" class="switch-btn active-page">
+          💳 2. PAYMENT & PLANS (VERCEL)
+        </a>
+        <a href="/dashboard.html" class="switch-btn">
+          ⚡ 3. MAIN FUNCTION WEB PAGE
+        </a>
+        <a href="/index.v0.html" class="switch-btn" style="border-color:#475569;">
+          ORIGINAL V0
+        </a>
+      </nav>
+    </header>
+
+    <!-- ======================================================== -->
+    <!-- EXACT VERCEL NULLMESH PAYMENT & SUBSCRIPTION PLANS PAGE   -->
+    <!-- ======================================================== -->
+    <main class="payment-page-container">
+      
+      <!-- Top Title -->
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+        <div>
+          <h1 style="font-family:'Outfit', sans-serif; font-size:1.6rem; color:#fff; letter-spacing:1px; margin:0 0 6px 0;">
+            💳 NULLMESH DEFENSE // VERCEL SUBSCRIPTION & PAYMENT PLANS
+          </h1>
+          <div style="font-size:0.8rem; color:#8b9eb5;">
+            INTEGRATED FROM ORIGINAL NULLMESH DEFENSE SUITE (OFFICIAL STRIPE GATEWAY)
+          </div>
+        </div>
+        <div>
+          <a href="/dashboard.html" class="btn-stripe btn-stripe-outline" style="border-color:#00f59b; color:#00f59b; padding:0.6rem 1.2rem; font-size:0.82rem;">
+            ➔ PROCEED TO MAIN TACTICAL PLATFORM
+          </a>
+        </div>
+      </div>
+
+      <!-- Active Account Clearance Status (for bhuvanjakkula@gmail.com) -->
+      <div style="background:linear-gradient(135deg, rgba(10, 24, 48, 0.9) 0%, rgba(6, 12, 26, 0.95) 100%); border:1px solid #00f3ff; border-radius:12px; padding:20px; box-shadow:0 0 30px rgba(0, 243, 255, 0.15); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+        <div>
+          <div style="font-size:0.7rem; color:#8b9eb5; text-transform:uppercase;">
+            ACTIVE ACCOUNT DEFENSE CLEARANCE
+          </div>
+          <div style="font-family:'Outfit', sans-serif; font-size:1.35rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:10px; margin-top:4px;">
+            <span style="color:#00f3ff;">🛡️</span>
+            <span>COMMANDANT MAX // SOVEREIGN DEFENSE ENCLAVE</span>
+          </div>
+          <div style="font-size:0.8rem; color:#e0e6ed; margin-top:4px;">
+            Authorized User: <strong style="color:#fff;">bhuvanjakkula@gmail.com</strong>
+          </div>
+          <div style="font-size:0.75rem; color:#00f59b; margin-top:4px;">
+            Billing Status: <strong>$0.00 / month (Authorized Defense Clearance // No Payment Required)</strong>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
+          <span style="padding:4px 12px; font-size:0.75rem; background:rgba(0,245,155,0.15); border:1px solid #00f59b; color:#00f59b; border-radius:4px; font-weight:700;">
+            ● ACTIVE & UNLOCKED
+          </span>
+          <button id="btnDlReceipt" style="background:transparent; border:1px solid rgba(255,255,255,0.15); color:#8b9eb5; padding:6px 12px; border-radius:4px; font-family:inherit; font-size:0.72rem; cursor:pointer;">
+            📄 DOWNLOAD CLEARANCE CERTIFICATE
+          </button>
+        </div>
+      </div>
+
+      <!-- EXACT VERCEL ACCESS DENIED & STRIPE PAYMENT MODAL -->
+      <div style="display:flex; justify-content:center; margin:1rem 0;">
+        <div class="vercel-pricing-card" style="max-width:760px; width:100%; text-align:center; border:1px solid var(--accent-red, #f33); box-shadow:0 0 40px rgba(255, 51, 51, 0.15);">
+          
+          <!-- Red Shield Icon -->
+          <div style="margin:0 auto 1.5rem auto; width:64px; height:64px; display:flex; align-items:center; justify-content:center;">
+            <svg viewBox="0 0 24 24" width="64" height="64" stroke="var(--accent-red, #f33)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+
+          <h2 style="color:var(--accent-red, #f33); margin-bottom:1rem; font-size:2rem; font-family:'Outfit', sans-serif; letter-spacing:1px;">
+            COMMERCIAL & DEFENSE ACCESS TIERS
+          </h2>
+
+          <p style="color:var(--text-muted, #8b9eb5); margin-bottom:2rem; font-size:1.05rem; line-height:1.6; max-width:650px; margin-left:auto; margin-right:auto;">
+            Your secure session has been established. To access the tactical terminal without pre-authorized clearance, please authorize a subscription payment for your tier. Upon payment completion, terminal access will automatically unlock.
+          </p>
+
+          <!-- The 3 Exact Original Vercel Stripe Links -->
+          <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+            
+            <!-- SME Tier -->
+            <a href="https://buy.stripe.com/test_cNidR12XcdOl7D14462oE02" target="_blank" rel="noopener noreferrer" class="btn-stripe btn-stripe-outline" style="border-color:#1a2736;">
+              Authorize SME ($14,999/mo)
+            </a>
+
+            <!-- Commandant Tier (Primary Vercel Button) -->
+            <a href="https://buy.stripe.com/test_8x2dR1cxM7pX4qP1VY2oE01" target="_blank" rel="noopener noreferrer" class="btn-stripe btn-stripe-primary">
+              Authorize Commandant ($89,999/mo)
+            </a>
+
+            <!-- Enterprise Tier -->
+            <a href="https://buy.stripe.com/test_7sYaEP2XcfWt8H5eIK2oE03" target="_blank" rel="noopener noreferrer" class="btn-stripe btn-stripe-outline" style="border-color:#00f3ff; color:#00f3ff;">
+              Authorize Enterprise ($250k/mo)
+            </a>
+
+          </div>
+
+          <div style="margin-top:1.5rem; font-size:0.75rem; color:#8b9eb5;">
+            🔒 Secured with 256-bit Post-Quantum Defense Encryption & Stripe Financial Protocol
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Comparison Breakdown Matrix -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:18px;">
+        
+        <!-- Plan 1 -->
+        <div class="vercel-pricing-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span style="font-family:'Outfit', sans-serif; font-size:1.2rem; font-weight:800; color:#fff;">SME TIER</span>
+            <span style="font-size:0.75rem; padding:2px 8px; border:1px solid #1a2736; border-radius:4px; color:#8b9eb5;">STANDARD</span>
+          </div>
+          <div style="font-size:1.6rem; font-weight:700; color:#fff; margin-bottom:12px;">$14,999 <span style="font-size:0.8rem; color:#8b9eb5; font-weight:400;">/ month</span></div>
+          <ul style="list-style:none; padding:0; margin:0 0 18px 0; display:flex; flex-direction:column; gap:8px; font-size:0.78rem; color:#e0e6ed;">
+            <li>✓ Tactical Ground MANET & HF Relay Access</li>
+            <li>✓ 10 Gbps Dynamic Mesh Bandwidth</li>
+            <li>✓ Sub-100ms CDT Convergence Guarantee</li>
+            <li>✓ AES-256-GCM Classical Encryption</li>
+          </ul>
+          <a href="https://buy.stripe.com/test_cNidR12XcdOl7D14462oE02" target="_blank" class="btn-stripe btn-stripe-outline" style="width:100%; text-align:center; padding:0.75rem;">
+            BUY SME VIA STRIPE ➔
+          </a>
+        </div>
+
+        <!-- Plan 2 -->
+        <div class="vercel-pricing-card" style="border-color:var(--accent-red, #f33);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span style="font-family:'Outfit', sans-serif; font-size:1.2rem; font-weight:800; color:var(--accent-red, #f33);">COMMANDANT TIER</span>
+            <span style="font-size:0.75rem; padding:2px 8px; border:1px solid var(--accent-red, #f33); border-radius:4px; color:var(--accent-red, #f33);">OFFICIAL VERCEL</span>
+          </div>
+          <div style="font-size:1.6rem; font-weight:700; color:#fff; margin-bottom:12px;">$89,999 <span style="font-size:0.8rem; color:#8b9eb5; font-weight:400;">/ month</span></div>
+          <ul style="list-style:none; padding:0; margin:0 0 18px 0; display:flex; flex-direction:column; gap:8px; font-size:0.78rem; color:#e0e6ed;">
+            <li>✓ All 4 Domains (Space, Air, Sea, Land)</li>
+            <li>✓ Node D Hot-Standby 18ms Failover</li>
+            <li>✓ BB84 Quantum Key Distribution Channel</li>
+            <li>✓ NIST FIPS 203 ML-KEM-768 Lattice Cryptography</li>
+            <li>✓ Store-and-Forward Disruption-Tolerant DTN</li>
+          </ul>
+          <a href="https://buy.stripe.com/test_8x2dR1cxM7pX4qP1VY2oE01" target="_blank" class="btn-stripe btn-stripe-primary" style="width:100%; text-align:center; padding:0.75rem;">
+            BUY COMMANDANT VIA STRIPE ➔
+          </a>
+        </div>
+
+        <!-- Plan 3 -->
+        <div class="vercel-pricing-card" style="border-color:#00f3ff;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span style="font-family:'Outfit', sans-serif; font-size:1.2rem; font-weight:800; color:#00f3ff;">ENTERPRISE TIER</span>
+            <span style="font-size:0.75rem; padding:2px 8px; border:1px solid #00f3ff; border-radius:4px; color:#00f3ff;">UNLIMITED DEFENSE</span>
+          </div>
+          <div style="font-size:1.6rem; font-weight:700; color:#fff; margin-bottom:12px;">$250,000 <span style="font-size:0.8rem; color:#8b9eb5; font-weight:400;">/ month</span></div>
+          <ul style="list-style:none; padding:0; margin:0 0 18px 0; display:flex; flex-direction:column; gap:8px; font-size:0.78rem; color:#e0e6ed;">
+            <li>✓ Sovereign Dedicated Optical SatCOM Constellation</li>
+            <li>✓ Sudarshan Chakra Saturation Defense Grid</li>
+            <li>✓ Custom ML-DSA-65 High-Assurance Enclaves</li>
+            <li>✓ 24/7 Red-Team EW Threat Countermeasures</li>
+            <li>✓ Unlimited Hardware Mesh Node Deployment</li>
+          </ul>
+          <a href="https://buy.stripe.com/test_7sYaEP2XcfWt8H5eIK2oE03" target="_blank" class="btn-stripe btn-stripe-outline" style="width:100%; text-align:center; padding:0.75rem; border-color:#00f3ff; color:#00f3ff;">
+            BUY ENTERPRISE VIA STRIPE ➔
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Invoicing & Defense Procurement Records -->
+      <div class="vercel-pricing-card">
+        <h3 style="font-family:'Outfit', sans-serif; font-size:1.1rem; color:#fff; margin:0 0 12px 0;">
+          📋 DEFENSE PROCUREMENT INVOICE HISTORY
+        </h3>
+        <table style="width:100%; border-collapse:collapse; font-size:0.75rem; color:#e0e6ed;">
+          <thead>
+            <tr style="border-bottom:1px solid #1a2736; color:#8b9eb5; text-align:left;">
+              <th style="padding:8px 10px;">INVOICE ID</th>
+              <th style="padding:8px 10px;">DATE</th>
+              <th style="padding:8px 10px;">TIER / SERVICE</th>
+              <th style="padding:8px 10px;">AMOUNT</th>
+              <th style="padding:8px 10px;">GATEWAY</th>
+              <th style="padding:8px 10px;">STATUS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:8px 10px; color:#00f3ff; font-weight:700;">INV-2026-9041</td>
+              <td style="padding:8px 10px;">2026-10-02</td>
+              <td style="padding:8px 10px;">Commandant Max Sovereign Enclave (Lifetime)</td>
+              <td style="padding:8px 10px;">$0.00</td>
+              <td style="padding:8px 10px;">Direct Defense Protocol</td>
+              <td style="padding:8px 10px;"><span style="color:#00f59b; font-weight:700;">PAID</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+              <td style="padding:8px 10px; color:#00f3ff; font-weight:700;">INV-2026-8190</td>
+              <td style="padding:8px 10px;">2026-09-02</td>
+              <td style="padding:8px 10px;">Quantum Enclave Channel Allocation</td>
+              <td style="padding:8px 10px;">$0.00</td>
+              <td style="padding:8px 10px;">Direct Defense Protocol</td>
+              <td style="padding:8px 10px;"><span style="color:#00f59b; font-weight:700;">PAID</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+
+    <script>
+      // Download Certificate
+      document.getElementById("btnDlReceipt").addEventListener("click", () => {
+        const text = `===========================================================\\n` +
+          `NULLMESH DEFENSE // OFFICIAL VERCEL DEFENSE CLEARANCE\\n` +
+          `===========================================================\\n` +
+          `ISSUED TO: bhuvanjakkula@gmail.com\\n` +
+          `CLEARANCE LEVEL: COMMANDANT_MAX (DEFCON PROTOCOL)\\n` +
+          `SUBSCRIPTION TIER: QUANTUM SOVEREIGN COMMANDANT (VERCEL V2)\\n` +
+          `STRIPE GATEWAY: VERIFIED // $0.00 COMPLIMENTARY DEFENSE PASS\\n` +
+          `STRIPE REFERENCE: https://buy.stripe.com/test_8x2dR1cxM7pX4qP1VY2oE01\\n` +
+          `DATE: ${new Date().toUTCString()}\\n` +
+          `===========================================================`;
+
+        const blob = new Blob([text], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `NULLMESH_CLEARANCE_CERTIFICATE_${Date.now()}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+    </script>
+  </body>
+</html>

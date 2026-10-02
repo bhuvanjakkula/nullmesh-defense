@@ -1,0 +1,22 @@
+services:
+  node-a:
+    build: .
+    environment: [NULLMESH_NODE=node-a, NULLMESH_PORT=8000, NULLMESH_DATA=/data, NULLMESH_PEERS=http://node-b:8000,http://node-d:8000]
+    ports: ["8001:8000"]
+    volumes: [node-a:/data]
+  node-b:
+    build: .
+    environment: [NULLMESH_NODE=node-b, NULLMESH_PORT=8000, NULLMESH_DATA=/data, NULLMESH_PEERS=http://node-a:8000,http://node-c:8000]
+    ports: ["8002:8000"]
+    volumes: [node-b:/data]
+  node-c:
+    build: .
+    environment: [NULLMESH_NODE=node-c, NULLMESH_PORT=8000, NULLMESH_DATA=/data, NULLMESH_PEERS=http://node-b:8000,http://node-d:8000]
+    ports: ["8003:8000"]
+    volumes: [node-c:/data]
+  node-d:
+    build: .
+    environment: [NULLMESH_NODE=node-d, NULLMESH_PORT=8000, NULLMESH_DATA=/data, NULLMESH_PEERS=http://node-a:8000,http://node-c:8000]
+    ports: ["8004:8000"]
+    volumes: [node-d:/data]
+volumes: {node-a: {}, node-b: {}, node-c: {}, node-d: {}}

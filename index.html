@@ -1,0 +1,959 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>if (window.location.pathname === "/" || window.location.pathname === "/index.html") { window.location.href = "/signin.html"; }</script>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NULLMESH DEFENSE // Integrated C4ISR Tactical Architecture & Quantum Enclave</title>
+    
+    <!-- Modern Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/css/tactical.css">
+  </head>
+  <body>
+
+    <!-- ======================================================== -->
+    <!-- STARTING SIGN-IN GATEWAY (Full Page Access Entrance)    -->
+    <!-- ======================================================== -->
+    <div class="auth-gateway-overlay" id="authGatewayOverlay">
+      <div class="auth-card">
+        <div class="auth-card-hdr">
+          <div class="auth-card-title">
+            <span style="color:var(--accent-cyan);">🛡️</span> NULLMESH DEFENSE
+          </div>
+          <div class="auth-card-desc">SECURE COMMAND ACCESS GATEWAY // DEFCON PROTOCOL</div>
+        </div>
+
+        <form id="authGatewayForm" style="display:flex; flex-direction:column; gap:12px;">
+          <div class="form-group">
+            <label class="form-label">EMAIL ADDRESS</label>
+            <input type="email" class="form-input" id="authEmailInput" value="bhuvanjakkula@gmail.com" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">SECURITY PASSCODE</label>
+            <input type="password" class="form-input" id="authPasswordInput" placeholder="Enter security passcode (optional)" />
+          </div>
+
+          <button type="submit" class="btn-auth-owner" id="btnGatewayOwnerLogin" style="background:linear-gradient(135deg, var(--accent-cyan), #0077ff); color:#fff; border:none;">
+            SIGN IN TO TACTICAL WORKSPACE
+          </button>
+
+          <button type="button" class="btn-auth-standard" id="btnGatewayDemo">
+            CONTINUE
+          </button>
+        </form>
+
+        <div style="display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:0.65rem; color:var(--text-muted); border-top:1px solid var(--border-subtle); padding-top:10px;">
+          <span>NIST FIPS 203 ML-KEM-768</span>
+          <span>BB84 QKD VERIFIED</span>
+          <span>DISRUPTION-TOLERANT</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- TOP TACTICAL NAVIGATION BAR                              -->
+    <!-- ======================================================== -->
+    <header class="top-header">
+      <div class="brand-section">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="brand-title">
+          <span class="brand-name">NULLMESH DEFENSE <span class="badge-version">v2.0-ULTRA</span></span>
+          <span class="brand-subtitle">INTEGRATED MULTI-DOMAIN C4ISR & CORE ARCHITECTURE</span>
+        </div>
+      </div>
+
+      <!-- Top Header Actions -->
+      <div class="header-actions">
+        <!-- Active User Badge -->
+        <div class="canvas-badge" style="border-color:var(--border-subtle); color:var(--text-main);" title="Session Active">
+          <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:600; color:#fff;" id="topUserEmail">bhuvanjakkula@gmail.com</span>
+          <span class="badge-version" style="border-color:var(--accent-cyan); color:var(--accent-cyan); padding:1px 5px; font-size:0.62rem;">ACTIVE</span>
+        </div>
+
+        <div class="defcon-badge">
+          <div class="pulse-indicator"></div>
+          <span id="valDefcon">DEFCON 2</span>
+        </div>
+
+        <button class="btn-tactical" id="btnHeaderSub" title="View User Subscription & Billing Layer" style="border-color:var(--accent-cyan); color:var(--accent-cyan);">
+          💳 SUBSCRIPTION
+        </button>
+        <button class="btn-tactical" id="btnSignOut" title="Return to Starting Sign In Gateway" style="border-color:var(--border-subtle); color:var(--text-dim);">
+          🔑 SIGN OUT / RE-LOGIN
+        </button>
+
+        <button class="btn-tactical btn-danger" id="btnThreatBlackout" title="Attempt coordinated total kill-web denial">
+          ⚠️ BLACKOUT TEST
+        </button>
+
+        <button class="btn-tactical" id="btnRestoreAll" title="Restore baseline peace-time configuration">
+          ↺ RESET ALL
+        </button>
+
+        <a href="/index.v0.html" class="btn-tactical" style="text-decoration:none;" title="Open Original Vercel V0 Interface">
+          ORIGINAL V0
+        </a>
+      </div>
+    </header>
+
+    <!-- Navigation Bar for Unified Integrated Views -->
+    <nav class="view-nav-bar">
+      <button class="view-tab active" data-view="multidomain">
+        🌐 MULTI-DOMAIN GRID (SPACE · AIR · SEA · LAND)
+      </button>
+      <button class="view-tab" data-view="architecture">
+        ⚡ CORE MESH & NODE D FAILOVER
+      </button>
+      <button class="view-tab" data-view="cdt">
+        📐 CDT HORIZON & SWARM HEALING
+      </button>
+      <button class="view-tab" data-view="quantum">
+        ⚛️ QUANTUM ENCLAVE (QKD & PQC)
+      </button>
+      <button class="view-tab" data-view="core">
+        📦 PYTHON v0.1 PROTOCOL & SUITE
+      </button>
+      <button class="view-tab" data-view="layers">
+        📚 ALL WEB & SYSTEM LAYERS (DECONSTRUCTED)
+      </button>
+      <button class="view-tab" data-view="subscription">
+        💳 USER SUBSCRIPTION & PAYMENT LAYER
+      </button>
+    </nav>
+
+    <!-- Main Dynamic View Container -->
+    <main class="main-dashboard" id="mainDashboard">
+      
+      <!-- Left Panel: Domain Fleet Controller -->
+      <aside class="tactical-panel" id="panelDomainFleet">
+        <div class="panel-header">
+          <span class="panel-title">🛡️ DOMAIN FLEET NODES</span>
+          <span class="badge-version" id="valNetworkHealth">100% HEALTH</span>
+        </div>
+        <div class="panel-body">
+          <div class="domain-metrics-bar" style="flex-wrap:wrap; margin-bottom:8px;">
+            <div class="domain-pill active" data-domain="all">
+              <span class="domain-dot dot-space"></span>
+              <span>ALL</span>
+              <span class="pill-count">16</span>
+            </div>
+            <div class="domain-pill" data-domain="space">
+              <span class="domain-dot dot-space"></span>
+              <span>SPACE</span>
+              <span class="pill-count">6</span>
+            </div>
+            <div class="domain-pill" data-domain="air">
+              <span class="domain-dot dot-air"></span>
+              <span>AIR</span>
+              <span class="pill-count">4</span>
+            </div>
+            <div class="domain-pill" data-domain="sea">
+              <span class="domain-dot dot-sea"></span>
+              <span>SEA</span>
+              <span class="pill-count">4</span>
+            </div>
+            <div class="domain-pill" data-domain="land">
+              <span class="domain-dot dot-land"></span>
+              <span>LAND</span>
+              <span class="pill-count">4</span>
+            </div>
+            <div class="domain-pill" data-domain="qkd">
+              <span class="domain-dot dot-qkd"></span>
+              <span>QKD</span>
+              <span class="pill-count">4</span>
+            </div>
+          </div>
+
+          <div class="node-tree" id="nodeTree">
+            <!-- Dynamic Node Cards populated by app.js -->
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center Main: Dynamic Viewport -->
+      <section class="tactical-panel" id="centerViewport" style="background:#02050e;">
+        <div class="panel-header">
+          <span class="panel-title" id="centerTitle">🌐 LIVE TACTICAL MESH TOPOLOGY</span>
+          <div class="panel-controls">
+            <span class="badge-version" style="border-color:var(--accent-green); color:var(--accent-green);">
+              ● LASER OISL / HF BOUNCE SYNCHRONIZED
+            </span>
+          </div>
+        </div>
+        
+        <!-- View 1: Multi-Domain 2.5D Canvas -->
+        <div class="canvas-wrapper" id="multidomainWrapper">
+          <!-- Interactive Domain Layer Filter Bar -->
+          <div class="canvas-layer-filter-bar">
+            <span class="filter-bar-title">ISOLATE DOMAIN LAYER:</span>
+            <button class="domain-layer-btn active" data-domain="all">ALL DOMAINS</button>
+            <button class="domain-layer-btn" data-domain="space">🛰️ SPACE LAYER</button>
+            <button class="domain-layer-btn" data-domain="air">✈️ AIR LAYER</button>
+            <button class="domain-layer-btn" data-domain="sea">⚓ SEA LAYER</button>
+            <button class="domain-layer-btn" data-domain="land">🛡️ LAND LAYER</button>
+          </div>
+          <canvas id="tacticalCanvas"></canvas>
+          
+          <div class="canvas-overlay-top">
+            <div class="canvas-badge">
+              <span>ORBITAL SPEED:</span>
+              <strong style="color:var(--accent-cyan);">7.6 km/s</strong>
+            </div>
+            <div class="canvas-badge">
+              <span>STORE-AND-FORWARD DTN:</span>
+              <strong style="color:var(--accent-green);">ARMED</strong>
+            </div>
+            <div class="canvas-badge">
+              <span>BYZANTINE ISOLATION:</span>
+              <strong style="color:var(--accent-amber);">BFT-3 ACTIVE</strong>
+            </div>
+          </div>
+
+          <div class="canvas-legend">
+            <div class="legend-item">
+              <div class="legend-line" style="background:var(--accent-cyan); box-shadow:0 0 6px var(--accent-cyan);"></div>
+              <span>SDA Laser OISL (100Gbps)</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-line" style="background:var(--accent-green); border-bottom:1px dashed #fff;"></div>
+              <span>STANAG-5066 HF Ionosphere Bounce</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-line" style="background:var(--domain-air);"></div>
+              <span>Link-16 / MANET Tactical RF</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-line" style="background:var(--accent-qkd);"></div>
+              <span>QKD Quantum Entangled Photon Link</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- View 2: Original Tactical Mesh Architecture Stage (Command -> A -> B / D -> C -> Recon) -->
+        <div class="arch-stage" id="architectureWrapper" style="display:none;">
+          <svg class="arch-svg-overlay" id="archSvgOverlay"></svg>
+
+          <!-- Interactive Node Elements -->
+          <div class="arch-node-box status-trusted" id="archNodeCmd" style="left:12%; top:50%;">
+            <div style="font-size:1.2rem;">🛡️</div>
+            <div class="node-title-label">Command TOC</div>
+            <div class="node-sub-role">Master HQ (C2)</div>
+          </div>
+
+          <div class="arch-node-box status-trusted" id="archNodeA" style="left:30%; top:50%;">
+            <div style="font-size:1.2rem;">🌐</div>
+            <div class="node-title-label">Node A</div>
+            <div class="node-sub-role">Tactical Gateway</div>
+          </div>
+
+          <!-- Node B (Primary Relay) -->
+          <div class="arch-node-box status-trusted" id="archNodeB" style="left:55%; top:25%;">
+            <div style="font-size:1.2rem;">📡</div>
+            <div class="node-title-label">Node B (Relay)</div>
+            <div class="node-sub-role" id="subRoleB">Primary Active Relay</div>
+          </div>
+
+          <!-- Node D (Backup Relay) - Full Functioning Interactive Failover! -->
+          <div class="arch-node-box status-standby" id="archNodeD" style="left:55%; top:75%;">
+            <div style="font-size:1.2rem;">📻</div>
+            <div class="node-title-label">Node D (Backup)</div>
+            <div class="node-sub-role" id="subRoleD">Standby Failover Relay</div>
+          </div>
+
+          <div class="arch-node-box status-trusted" id="archNodeC" style="left:78%; top:50%;">
+            <div style="font-size:1.2rem;">🌐</div>
+            <div class="node-title-label">Node C</div>
+            <div class="node-sub-role">Regional Concentrator</div>
+          </div>
+
+          <div class="arch-node-box status-trusted" id="archNodeRecon" style="left:92%; top:50%;">
+            <div style="font-size:1.2rem;">🔍</div>
+            <div class="node-title-label">Recon Unit</div>
+            <div class="node-sub-role">Edge Tactical Sensor</div>
+          </div>
+
+          <div class="arch-node-box status-unauthorized" id="archNodeRogue" style="left:30%; top:15%;">
+            <div style="font-size:1.2rem;">⚡</div>
+            <div class="node-title-label">Rogue Emitter</div>
+            <div class="node-sub-role" style="color:var(--accent-amber);">BLOCKED (Zero-Trust)</div>
+          </div>
+
+          <!-- Bottom Banner inside Architecture Stage -->
+          <div style="position:absolute; bottom:14px; left:14px; right:14px; display:flex; justify-content:space-between; align-items:center; background:rgba(6,9,19,0.85); padding:10px 16px; border-radius:6px; border:1px solid var(--border-subtle);">
+            <div>
+              <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">ACTIVE RELAY ROUTE: </span>
+              <strong style="font-family:var(--font-mono); font-size:0.8rem; color:var(--accent-cyan);" id="activeRouteLabel">CMD ➔ A ➔ B (PRIMARY) ➔ C ➔ RECON</strong>
+            </div>
+            <button class="btn-tactical" id="btnStressTest" style="border-color:var(--accent-amber); color:var(--accent-amber);">
+              ⚡ STRESS TEST ARCHITECTURE (FAILOVER TO NODE D)
+            </button>
+          </div>
+        </div>
+
+        <!-- View 3: CDT Mathematical Invariant & Swarm Healing Container -->
+        <div class="cdt-container" id="cdtWrapper" style="display:none;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span style="font-family:var(--font-display); font-weight:700; color:#fff;">TEMPORAL KILL-WEB TIMELINE (T-0 TO T-30)</span>
+              <button class="btn-tactical" id="btnRunCdtApi">▶ RUN LIVE CDT INVARIANT CHECK</button>
+            </div>
+            <div class="timeline-track" id="cdtTimelineTrack">
+              <!-- Dynamically populated from backend /api/v1/analyze -->
+            </div>
+
+            <div style="margin-top:16px; background:rgba(10,16,30,0.8); border:1px solid var(--border-subtle); border-radius:8px; padding:14px;">
+              <div style="font-family:var(--font-display); font-weight:700; color:var(--accent-green); margin-bottom:8px;">
+                ✔ SWARM HEALING SCHEDULE (DELETION-ONLY REPAIR)
+              </div>
+              <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-dim); line-height:1.5;" id="swarmHealingOutput">
+                Status: All invariants held through T-12. Autonomous failover via Node D ready for zero-latency execution.
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div style="font-family:var(--font-display); font-weight:700; color:#fff; margin-bottom:10px;">
+              🎯 INVERSE CDT INTEL INFERENCE
+            </div>
+            <div style="background:rgba(12,18,34,0.8); border:1px solid var(--border-subtle); border-radius:8px; padding:12px;" id="intelInferenceBox">
+              <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:6px;">TARGET ACTOR DETECTED:</div>
+              <div style="font-family:var(--font-mono); font-weight:700; color:var(--accent-red); margin-bottom:12px;">RED_ACTOR_JAMMER_1</div>
+              <div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--text-dim); line-height:1.6;">
+                <div>T-4: [recon:broadband_sniff] (94% conf)</div>
+                <div>T-8: [rf_barrage_emit, spoof] (88% conf)</div>
+                <div>T-12: [coordinated_saturation] (79% conf)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- View 4: Quantum Computing & PQC Security Lab -->
+        <div style="display:none; padding:16px; overflow-y:auto; height:100%;" id="quantumWrapper">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div style="background:rgba(12,18,34,0.8); border:1px solid var(--border-subtle); border-radius:8px; padding:16px;">
+              <h3 style="font-family:var(--font-display); color:var(--accent-qkd); font-size:1.1rem; margin-bottom:8px;">
+                ⚛️ SHOR'S ALGORITHM RESISTANCE COMPARISON
+              </h3>
+              <p style="font-size:0.78rem; color:var(--text-dim); margin-bottom:14px; line-height:1.4;">
+                Shor's quantum algorithm solves discrete logarithms and prime factorization in polynomial time O((log N)³), rendering classical RSA-2048 and ECC-256 obsolete.
+              </p>
+              <div style="font-family:var(--font-mono); font-size:0.72rem; display:flex; flex-direction:column; gap:8px;">
+                <div style="background:rgba(255,51,102,0.1); border-left:3px solid var(--accent-red); padding:8px;">
+                  <strong style="color:var(--accent-red);">RSA-2048 / ECC-256:</strong><br>
+                  Status: VULNERABLE. Broken by ~4,096 logical qubits.
+                </div>
+                <div style="background:rgba(0,245,155,0.1); border-left:3px solid var(--accent-green); padding:8px;">
+                  <strong style="color:var(--accent-green);">NULLMESH ML-KEM-768 (Kyber):</strong><br>
+                  Status: QUANTUM-IMMUNE. Grounded in Module-LWE lattice vector problems. Exponential quantum complexity O(2¹²⁸).
+                </div>
+              </div>
+            </div>
+
+            <div style="background:rgba(12,18,34,0.8); border:1px solid var(--border-subtle); border-radius:8px; padding:16px;">
+              <h3 style="font-family:var(--font-display); color:var(--accent-cyan); font-size:1.1rem; margin-bottom:8px;">
+                🌀 GROVER'S ALGORITHM SYMMETRIC MARGIN
+              </h3>
+              <p style="font-size:0.78rem; color:var(--text-dim); margin-bottom:14px; line-height:1.4;">
+                Grover's amplitude amplification offers a quadratic quantum speedup (√N) against symmetric ciphers.
+              </p>
+              <div style="font-family:var(--font-mono); font-size:0.72rem; display:flex; flex-direction:column; gap:8px;">
+                <div style="background:rgba(0,243,255,0.1); border-left:3px solid var(--accent-cyan); padding:8px;">
+                  <strong style="color:var(--accent-cyan);">AES-256-GCM (NullMesh Enclave):</strong><br>
+                  Classical Search: 2²⁵⁶ operations.<br>
+                  Post-Grover Quantum Search: 2¹²⁸ operations.<br>
+                  Security Verdict: 128-bit quantum security margin remains unbreakable by any quantum computer physically possible.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- View 5: Python v0.1 Core Module Inspector -->
+        <div style="display:none; padding:16px; overflow-y:auto; height:100%; font-family:var(--font-mono);" id="coreWrapper">
+          <div style="background:rgba(12,18,34,0.8); border:1px solid var(--border-subtle); border-radius:8px; padding:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+              <span style="font-family:var(--font-display); font-size:1.1rem; font-weight:700; color:#fff;">📦 NULLMESH v0.1 IMMUTABLE MESH-OBJECT PROTOCOL</span>
+              <span class="badge-version" style="border-color:var(--accent-green); color:var(--accent-green);">9/9 TESTS PASSING</span>
+            </div>
+            <pre style="background:#000; padding:14px; border-radius:6px; border:1px solid var(--border-subtle); font-size:0.75rem; color:#fff; overflow-x:auto;">
+{
+  "object_id": "9f4e2a87b1c3491d90f239851c20e5d9",
+  "source": "SDA-LEO-01",
+  "destination": "STANAG-5066-HF",
+  "created_at": "2026-10-02T14:40:00Z",
+  "priority": 1,
+  "payload_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "cipher": "AES-256-GCM-PQC-HYBRID (ML-KEM-768)",
+  "pqc_signature": "ML-DSA-65 [VALID-LATTICE-PROOF]",
+  "qkd_verified": true,
+  "hops": ["SDA-LEO-01", "MEO-RELAY-01", "STANAG-5066-HF"]
+}
+            </pre>
+          </div>
+        </div>
+
+        <!-- View 6: Complete Web & System Layers Breakdown (Separated View) -->
+        <div style="display:none; padding:18px; overflow-y:auto; height:100%;" id="layersWrapper">
+          <div class="layers-deconstructor-container">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <h2 style="font-family:var(--font-display); font-size:1.35rem; color:#fff; letter-spacing:1px;">
+                📚 COMPLETE SYSTEM & WEB LAYERS ARCHITECTURE (SEPARATED)
+              </h2>
+              <span class="badge-version green">6/6 LAYERS ACTIVE & SYNCHRONIZED</span>
+            </div>
+            <p style="font-size:0.78rem; color:var(--text-dim); margin-bottom:12px; font-family:var(--font-mono);">
+              Each layer operates autonomously with strict abstraction boundaries, unified by Zero-Trust Causality & Disruption-Tolerant (CDT) consensus. Click "INSPECT LAYER" to isolate any layer.
+            </p>
+
+            <!-- Layer 1: Gateway & UI -->
+            <div class="layer-deconstructor-card layer-card-1">
+              <div class="layer-card-header">
+                <div class="layer-card-title">
+                  <span style="color:var(--accent-cyan);">LAYER 1</span>
+                  <span>// CLIENT COMMAND GATEWAY & TACTICAL HUD LAYER</span>
+                </div>
+                <span class="badge-version cyan">AUTHENTICATED (ZERO-TRUST)</span>
+              </div>
+              <div class="layer-card-body">
+                <div class="layer-desc-text">
+                  Handles user identity, defense DEFCON status, starting sign-in authorization, Web Audio API tactical sound synthesis, and real-time operator situational awareness HUD.
+                </div>
+                <div class="layer-spec-list">
+                  <div class="layer-spec-item">Protocol: <strong>HTTP/2 + Web Audio + JWT</strong></div>
+                  <div class="layer-spec-item">Security: <strong>Zero-Trust Session Tokens</strong></div>
+                  <div class="layer-spec-item">Clearance: <strong>COMMANDANT_MAX</strong></div>
+                </div>
+                <div>
+                  <button class="btn-layer-isolate" data-target="signout">SIGN IN FLOW</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Layer 2: Multi-Domain Physical & Link Layer -->
+            <div class="layer-deconstructor-card layer-card-2">
+              <div class="layer-card-header">
+                <div class="layer-card-title">
+                  <span style="color:var(--domain-air);">LAYER 2</span>
+                  <span>// MULTI-DOMAIN PHYSICAL & DATA LINK LAYER (SPACE · AIR · SEA · LAND)</span>
+                </div>
+                <span class="badge-version green">14 ACTIVE LINKS (100% HEALTH)</span>
+              </div>
+              <div class="layer-card-body">
+                <div class="layer-desc-text">
+                  Controls the kinetic domain nodes across low-earth orbit (SDA pLEO laser OISL), airborne high-bandwidth data links (MADL / TTNT), naval acoustic / VLF submarine relays, and ground tactical MANETs.
+                </div>
+                <div class="layer-spec-list">
+                  <div class="layer-spec-item">Optical Media: <strong>100 Gbps Laser OISL</strong></div>
+                  <div class="layer-spec-item">RF Media: <strong>STANAG-5066 HF Ionosphere</strong></div>
+                  <div class="layer-spec-item">Tactical Mesh: <strong>Link-16 / MANET Swarm</strong></div>
+                </div>
+                <div>
+                  <button class="btn-layer-isolate" data-target="multidomain">ISOLATE LAYER</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Layer 3: Core Tactical Mesh & Failover Routing Layer -->
+            <div class="layer-deconstructor-card layer-card-3">
+              <div class="layer-card-header">
+                <div class="layer-card-title">
+                  <span style="color:var(--accent-green);">LAYER 3</span>
+                  <span>// CORE TACTICAL MESH & NODE D HOT-STANDBY FAILOVER LAYER</span>
+                </div>
+                <span class="badge-version green">18ms AUTONOMOUS REROUTING</span>
+              </div>
+              <div class="layer-card-body">
+                <div class="layer-desc-text">
+                  Executes deterministic packet routing (CMD ➔ A ➔ B ➔ C ➔ RECON). Under jamming or node destruction, instantaneously promotes Node D from standby to active relay with zero packet loss.
+                </div>
+                <div class="layer-spec-list">
+                  <div class="layer-spec-item">Topology: <strong>5-Node BFT-Protected Mesh</strong></div>
+                  <div class="layer-spec-item">Recovery Limit: <strong>&lt;50ms Sub-second Healing</strong></div>
+                  <div class="layer-spec-item">Packet Loss: <strong>0.00% Guaranteed</strong></div>
+                </div>
+                <div>
+                  <button class="btn-layer-isolate" data-target="architecture">ISOLATE LAYER</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Layer 4: Consensus & CDT Temporal Horizon Layer -->
+            <div class="layer-deconstructor-card layer-card-4">
+              <div class="layer-card-header">
+                <div class="layer-card-title">
+                  <span style="color:var(--accent-amber);">LAYER 4</span>
+                  <span>// CAUSALITY & DISRUPTION-TOLERANT (CDT) CONSENSUS LAYER</span>
+                </div>
+                <span class="badge-version amber">T* DIVERGENCE BOUNDED</span>
+              </div>
+              <div class="layer-card-body">
+                <div class="layer-desc-text">
+                  Maintains causal ordering across partitioned networks with high propagation delay. Guarantees eventual swarm convergence without centralized clocks using vector-time horizons and Byzantine isolation.
+                </div>
+                <div class="layer-spec-list">
+                  <div class="layer-spec-item">Algorithm: <strong>CDT-Lamport Horizon Engine</strong></div>
+                  <div class="layer-spec-item">Convergence: <strong>T* = ∞ Guaranteed Secure</strong></div>
+                  <div class="layer-spec-item">Tolerance: <strong>f &lt; n/3 Byzantine Nodes</strong></div>
+                </div>
+                <div>
+                  <button class="btn-layer-isolate" data-target="cdt">ISOLATE LAYER</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Layer 5: Quantum Enclave & Post-Quantum Cryptography -->
+            <div class="layer-deconstructor-card layer-card-5">
+              <div class="layer-card-header">
+                <div class="layer-card-title">
+                  <span style="color:var(--accent-qkd);">LAYER 5</span>
+                  <span>// QUANTUM KEY DISTRIBUTION (QKD) & PQC CRYPTOGRAPHIC ENCLAVE</span>
+                </div>
+                <span class="badge-version" style="border-color:var(--accent-qkd); color:var(--accent-qkd);">NIST FIPS 203 CERTIFIED</span>
+              </div>
+              <div class="layer-card-body">
+                <div class="layer-desc-text">
+                  Employs BB84 polarized entangled photons for physical layer eavesdropping detection (QBER &lt; 11%) combined with NIST ML-KEM-768 Kyber and ML-DSA-65 Dilithium for post-quantum defense against Shor's algorithm.
+                </div>
+                <div class="layer-spec-list">
+                  <div class="layer-spec-item">Key Exchange: <strong>ML-KEM-768 (Module-LWE)</strong></div>
+                  <div class="layer-spec-item">Signatures: <strong>ML-DSA-65 (Lattice)</strong></div>
+                  <div class="layer-spec-item">QKD Channel: <strong>BB84 Dual-Basis (X / +)</strong></div>
+                </div>
+                <div>
+                  <button class="btn-layer-isolate" data-target="quantum">ISOLATE LAYER</button>
+                </div>
+              </div>
+            </div>
+
+            
+            <!-- Layer 7: User Subscription, Billing & Defense Procurement Layer -->
+            <div class="layer-deconstructor-card" style="border-left:4px solid #00f3ff;">
+              <div class="layer-card-header">
+                <div class="layer-card-title">
+                  <span style="color:#00f3ff;">LAYER 7</span>
+                  <span>// USER SUBSCRIPTION, BILLING & PAYMENT GATEWAY LAYER</span>
+                </div>
+                <span class="badge-version green">PAID // DEFENSE CLEARANCE ACTIVE</span>
+              </div>
+              <div class="layer-card-body">
+                <div class="layer-desc-text">
+                  Manages commercial subscription licensing, user accounts, government defense procurement cards (P-Cards), QKD-escrowed payment gateways, and automated zero-trust authorization.
+                </div>
+                <div class="layer-spec-list">
+                  <div class="layer-spec-item">Account Status: <strong>bhuvanjakkula@gmail.com (Authorized)</strong></div>
+                  <div class="layer-spec-item">Billing Tier: <strong>Commandant Max ($0.00/mo)</strong></div>
+                  <div class="layer-spec-item">Payment Gateway: <strong>Direct Defense Protocol</strong></div>
+                </div>
+                <div>
+                  <button class="btn-layer-isolate" data-target="subscription">ISOLATE LAYER</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Layer 6: Backend Service & Protocol Transport Layer -->
+            <div class="layer-deconstructor-card layer-card-6">
+              <div class="layer-card-header">
+                <div class="layer-card-title">
+                  <span style="color:#a855f7;">LAYER 6</span>
+                  <span>// BACKEND RUNTIME, WEBSOCKET STREAM & PYTHON v0.1 PROTOCOL</span>
+                </div>
+                <span class="badge-version green">PORT 8001 LIVE STREAMING</span>
+              </div>
+              <div class="layer-card-body">
+                <div class="layer-desc-text">
+                  FastAPI high-performance ASGI service, bidirectional WebSockets (/api/v1/mesh/stream), and immutable mesh-object protocol serialization with full pytest validation.
+                </div>
+                <div class="layer-spec-list">
+                  <div class="layer-spec-item">Core Engine: <strong>Python 3.12 + FastAPI</strong></div>
+                  <div class="layer-spec-item">Stream: <strong>WebSocket RFC 6455 (Full Duplex)</strong></div>
+                  <div class="layer-spec-item">Test Suite: <strong>9/9 Pytest Verified</strong></div>
+                </div>
+                <div>
+                  <button class="btn-layer-isolate" data-target="core">ISOLATE LAYER</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <!-- View 7: User Subscription & Payment Web Layer (Separated View) -->
+        <div style="display:none; padding:18px; overflow-y:auto; height:100%;" id="subscriptionWrapper">
+          <div class="subscription-container">
+            
+            <!-- Section Header -->
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <h2 style="font-family:var(--font-display); font-size:1.35rem; color:#fff; letter-spacing:1px; margin-bottom:4px;">
+                  💳 USER SUBSCRIPTION, BILLING & DEFENSE PROCUREMENT PAYMENT LAYER
+                </h2>
+                <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-dim);">
+                  ENTERPRISE COMMERCIAL & DEFENSE CLEARANCE LICENSING GATEWAY
+                </div>
+              </div>
+              <span class="badge-version green" id="subBadgeState">SUBSCRIPTION ACTIVE</span>
+            </div>
+
+            <!-- Current Account & Subscription Status Card -->
+            <div class="sub-current-card">
+              <div class="sub-current-info">
+                <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--text-dim); text-transform:uppercase;">
+                  ACTIVE ACCOUNT CLEARANCE
+                </div>
+                <div class="sub-plan-badge">
+                  <span style="color:var(--accent-cyan);">🛡️</span>
+                  <span id="subPlanTitle">DEFENSE COMMANDANT MAX // SOVEREIGN ENCLAVE</span>
+                </div>
+                <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-main); margin-top:2px;">
+                  Authorized User: <strong id="subUserEmail" style="color:#fff;">bhuvanjakkula@gmail.com</strong>
+                </div>
+                <div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--accent-green); margin-top:4px;">
+                  Billing Status: <strong>$0.00 / month (Authorized Defense Clearance // No Payment Required)</strong>
+                </div>
+              </div>
+
+              <div style="display:flex; flex-direction:column; gap:8px; align-items:flex-end;">
+                <span class="badge-version green" style="padding:4px 10px; font-size:0.75rem;">
+                  ● LIFETIME ACTIVE (NO EXPIRATION)
+                </span>
+                <button class="btn-tactical" id="btnDownloadInvoice" style="border-color:var(--border-subtle); font-size:0.72rem;">
+                  📄 DOWNLOAD OFFICIAL CLEARANCE RECEIPT
+                </button>
+              </div>
+            </div>
+
+            <!-- Subscription Tier Matrix (Separately Inspectable) -->
+            <div style="margin-top:6px;">
+              <h3 style="font-family:var(--font-display); font-size:1.05rem; color:#fff; margin-bottom:12px;">
+                AVAILABLE SUBSCRIPTION & PROCUREMENT TIERS
+              </h3>
+              
+              <div class="sub-pricing-grid">
+                <!-- Tier 1: Operator -->
+                <div class="sub-plan-card">
+                  <div>
+                    <div class="plan-hdr">
+                      <div class="plan-name">TACTICAL OPERATOR</div>
+                      <span class="badge-version">TIER 1</span>
+                    </div>
+                    <div class="plan-price">$49 <span>/ month</span></div>
+                    <ul class="plan-features">
+                      <li>Single-Domain Tactical MANET Access</li>
+                      <li>10 Gbps Dynamic Mesh Bandwidth</li>
+                      <li>Standard AES-256-GCM Encryption</li>
+                      <li>Telemetry Logging (7-day Retention)</li>
+                      <li>Community Support</li>
+                    </ul>
+                  </div>
+                  <button class="btn-plan-select" data-tier="operator">SELECT TACTICAL OPERATOR</button>
+                </div>
+
+                <!-- Tier 2: Swarm Commander -->
+                <div class="sub-plan-card">
+                  <div>
+                    <div class="plan-hdr">
+                      <div class="plan-name">SWARM COMMANDER</div>
+                      <span class="badge-version cyan">TIER 2</span>
+                    </div>
+                    <div class="plan-price">$299 <span>/ month</span></div>
+                    <ul class="plan-features">
+                      <li>All 4 Domains (Space, Air, Sea, Land)</li>
+                      <li>Autonomous Node D Standby Failover (18ms)</li>
+                      <li>CDT Consensus Horizon Engine (T* = ∞)</li>
+                      <li>50 Gbps High-Throughput OISL Relay</li>
+                      <li>Priority 24/7 Red-Team Support</li>
+                    </ul>
+                  </div>
+                  <button class="btn-plan-select" data-tier="commander">SELECT SWARM COMMANDER</button>
+                </div>
+
+                <!-- Tier 3: Quantum Sovereign / Defense Commandant -->
+                <div class="sub-plan-card featured">
+                  <div>
+                    <div class="plan-hdr">
+                      <div class="plan-name" style="color:var(--accent-cyan);">QUANTUM SOVEREIGN</div>
+                      <span class="badge-version" style="border-color:var(--accent-green); color:var(--accent-green);">CURRENT ACTIVE</span>
+                    </div>
+                    <div class="plan-price">$1,499 <span>/ mo (FREE FOR YOU)</span></div>
+                    <ul class="plan-features">
+                      <li>BB84 Entangled Photon QKD (300 km Channel)</li>
+                      <li>NIST FIPS 203 ML-KEM-768 Lattice Cryptography</li>
+                      <li>ML-DSA-65 Quantum-Resistant Digital Signatures</li>
+                      <li>Sudarshan Chakra Saturation Defense Grid</li>
+                      <li>Sub-second Autonomous Self-Healing Mesh</li>
+                      <li>Direct Python v0.1 Core Package Access</li>
+                    </ul>
+                  </div>
+                  <button class="btn-plan-select active-plan" data-tier="commandant">CURRENT ACTIVE PLAN</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Payment Terminal & Invoicing History Section -->
+            <div class="payment-terminal-grid">
+              
+              <!-- Payment Gateway Terminal Form -->
+              <div class="terminal-card">
+                <div style="font-family:var(--font-display); font-size:1rem; font-weight:700; color:#fff; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                  <span>💳</span> DEFENSE PAYMENT & CHECKOUT TERMINAL
+                </div>
+
+                <form id="paymentCheckoutForm" style="display:flex; flex-direction:column; gap:10px;">
+                  <div class="form-group">
+                    <label class="form-label">PAYMENT METHOD</label>
+                    <select class="form-input" id="payMethodSelect">
+                      <option value="protocol">Direct Protocol Clearance (Authorized for bhuvanjakkula@gmail.com)</option>
+                      <option value="pcard">Government Defense P-Card / Commercial Visa/Mastercard</option>
+                      <option value="qkd">QKD-Escrowed Quantum Crypto (USDC / BTC)</option>
+                      <option value="contract">NATO / DoD Defense Contract Procurement Code</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">CARDHOLDER / PROCUREMENT AGENT NAME</label>
+                    <input type="text" class="form-input" id="payAgentName" value="Commander Bhuvan Jakkula" required />
+                  </div>
+
+                  <div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:8px;">
+                    <div class="form-group">
+                      <label class="form-label">CARD / ID NUMBER</label>
+                      <input type="text" class="form-input" id="payCardNum" value="•••• •••• •••• 9041" />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">EXPIRY</label>
+                      <input type="text" class="form-input" id="payExp" value="12/30" />
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">CVV / CODE</label>
+                      <input type="text" class="form-input" id="payCvv" value="•••" />
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn-auth-owner" id="btnSubmitPayment" style="margin-top:6px;">
+                    AUTHORIZE SUBSCRIPTION & CONFIRM CLEARANCE
+                  </button>
+
+                  <div id="paymentResultMsg" style="display:none; font-family:var(--font-mono); font-size:0.75rem; padding:8px; border-radius:4px;"></div>
+                </form>
+              </div>
+
+              <!-- Billing History & Invoice Records -->
+              <div class="terminal-card">
+                <div style="font-family:var(--font-display); font-size:1rem; font-weight:700; color:#fff; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                  <span>📋</span> INVOICING & PAYMENT HISTORY
+                </div>
+
+                <table class="table-invoices">
+                  <thead>
+                    <tr>
+                      <th>INVOICE ID</th>
+                      <th>DATE</th>
+                      <th>PLAN / SERVICE</th>
+                      <th>AMOUNT</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody id="invoiceTableBody">
+                    <tr>
+                      <td style="color:var(--accent-cyan);">INV-2026-9041</td>
+                      <td>2026-10-02</td>
+                      <td>Defense Commandant Max (Lifetime)</td>
+                      <td><strong>$0.00</strong></td>
+                      <td><span class="badge-version green" style="padding:1px 5px;">PAID</span></td>
+                    </tr>
+                    <tr>
+                      <td style="color:var(--accent-cyan);">INV-2026-8190</td>
+                      <td>2026-09-02</td>
+                      <td>Quantum Enclave Channel Allocation</td>
+                      <td><strong>$0.00</strong></td>
+                      <td><span class="badge-version green" style="padding:1px 5px;">PAID</span></td>
+                    </tr>
+                    <tr>
+                      <td style="color:var(--accent-cyan);">INV-2026-7023</td>
+                      <td>2026-08-02</td>
+                      <td>Tactical Multi-Domain Integration</td>
+                      <td><strong>$0.00</strong></td>
+                      <td><span class="badge-version green" style="padding:1px 5px;">PAID</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Right Sidebar: Threat Warfare Injection & Quantum Enclave -->
+      <aside class="tactical-panel">
+        <div class="panel-header">
+          <span class="panel-title">⚛️ QUANTUM ENCLAVE & EW SANDBOX</span>
+        </div>
+        <div class="panel-body">
+          <!-- Quantum Key Distribution (QKD) Enclave -->
+          <div class="qkd-enclave">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-family:var(--font-display); font-size:0.8rem; font-weight:700; color:var(--accent-qkd);">
+                QKD BB84 ENTANGLED PHOTON CHANNEL
+              </span>
+              <span class="badge-version" style="border-color:var(--accent-qkd); color:var(--accent-qkd);">300 KM LINK</span>
+            </div>
+
+            <div class="photon-stream" id="photonStream">
+              <!-- Real-time Photon stream bits -->
+            </div>
+
+            <div class="metrics-row">
+              <div class="metric-box">
+                <div class="metric-title">QBER (ERROR RATE)</div>
+                <div class="metric-val qkd" id="valQber">1.4%</div>
+                <div style="font-size:0.65rem; color:var(--text-muted); margin-top:2px;">Threshold: &lt;11%</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-title">KEY RATE</div>
+                <div class="metric-val cyan" id="valKeyRate">2,450 bps</div>
+                <div style="font-size:0.65rem; color:var(--text-muted); margin-top:2px;">Decoy-State Enabled</div>
+              </div>
+            </div>
+
+            <div style="font-size:0.7rem; font-family:var(--font-mono); color:var(--text-dim); display:flex; justify-content:space-between;">
+              <span>ACTIVE SESSION KEY:</span>
+              <strong style="color:var(--accent-cyan);" id="valActiveKey">0x8f2a...c4e9</strong>
+            </div>
+
+            <button class="btn-tactical" id="btnThreatQkd" style="width:100%; justify-content:center; border-color:var(--accent-qkd); color:var(--accent-qkd);">
+              🧪 INJECT QUANTUM EAVESDROPPING TAP
+            </button>
+          </div>
+
+          <!-- Threat Injection Warfare Controls -->
+          <div style="margin-top:4px;">
+            <div style="font-size:0.75rem; font-weight:700; color:var(--text-dim); margin-bottom:8px; font-family:var(--font-display);">
+              WARFARE STRIKE SIMULATION ENGINE
+            </div>
+            <div class="threat-grid">
+              <div class="threat-card" id="btnThreatEw">
+                <div class="threat-header">
+                  <span class="threat-name">⚡ BROADBAND EW JAMMING</span>
+                  <span class="threat-tag">RF DENIAL</span>
+                </div>
+                <div class="threat-desc">Jams land & air tactical frequencies. Tests auto-hop to Space Laser OISL & HF ionospheric bounce.</div>
+              </div>
+
+              <div class="threat-card" id="btnThreatAsat">
+                <div class="threat-header">
+                  <span class="threat-name">💥 DIRECT-ASCENT ASAT STRIKE</span>
+                  <span class="threat-tag">KINETIC KILL</span>
+                </div>
+                <div class="threat-desc">Destroys LEO satellites. Tests autonomous laser gimbal re-pointing & MEO/GEO fallback.</div>
+              </div>
+
+              <div class="threat-card" id="btnThreatFiber">
+                <div class="threat-header">
+                  <span class="threat-name">🌊 SUBSEA FIBER SEVERANCE</span>
+                  <span class="threat-tag">PHYSICAL CUT</span>
+                </div>
+                <div class="threat-desc">Cuts transoceanic cables. Tests dynamic reroute to Carrier Strike Group space downlink.</div>
+              </div>
+
+              <div class="threat-card" id="btnThreatSaturation">
+                <div class="threat-header">
+                  <span class="threat-name">🎯 SUDARSHAN CHAKRA SATURATION</span>
+                  <span class="threat-tag">SWARM WARFARE</span>
+                </div>
+                <div class="threat-desc">Simultaneous drone swarm on radar hub. Tests decentralized edge shooter peer-election.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Bottom Dock: Tactical Stream & CDT Mathematical Invariants -->
+      <footer class="bottom-dock">
+        <!-- Event Log -->
+        <div class="dock-panel">
+          <div class="panel-header">
+            <span class="panel-title">📜 C4ISR TACTICAL AUDIT STREAM</span>
+            <span class="badge-version">REAL-TIME</span>
+          </div>
+          <div class="log-stream" id="logStream">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- CDT Temporal Horizon Engine -->
+        <div class="dock-panel">
+          <div class="panel-header">
+            <span class="panel-title">📐 CDT MATHEMATICAL HORIZON ENGINE</span>
+            <span class="badge-version">T* INVARIANT CHECK</span>
+          </div>
+          <div class="panel-body" style="padding:10px;">
+            <div class="metrics-row">
+              <div class="metric-box">
+                <div class="metric-title">COHERENCE GUARANTEE</div>
+                <div class="metric-val green" id="valCdtGuarantee">SECURE (T* = ∞)</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-title">DIVERGENCE THRESHOLD</div>
+                <div class="metric-val cyan" id="valCdtHorizon">INFINITE (COHERENT)</div>
+              </div>
+            </div>
+
+            <div style="background:rgba(5,8,16,0.8); border:1px solid var(--border-subtle); border-radius:6px; padding:8px; font-family:var(--font-mono); font-size:0.72rem; color:var(--text-dim); margin-top:4px;">
+              <div><strong>ACTIVE INVARIANTS:</strong></div>
+              <div style="color:var(--accent-green); margin-top:2px;">✔ INV-1: Multi-Orbit Crosslink Path Redundancy ≥ 3</div>
+              <div style="color:var(--accent-green);">✔ INV-2: Store-and-Forward DTN Partition Buffer ≤ 128 MB</div>
+              <div style="color:var(--accent-green);">✔ INV-3: Post-Quantum ML-DSA-65 Zero-Trust Signature Valid</div>
+              <div style="color:var(--accent-green);">✔ INV-4: QKD Sifting QBER &lt; 11% (Shor-Preskill Bound)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Core Mesh Telemetry -->
+        <div class="dock-panel">
+          <div class="panel-header">
+            <span class="panel-title">⚡ REAL-TIME ARCHITECTURE TELEMETRY</span>
+            <span class="badge-version" style="border-color:var(--accent-green); color:var(--accent-green);">NODE D ONLINE</span>
+          </div>
+          <div class="panel-body" style="padding:10px; font-family:var(--font-mono); font-size:0.7rem;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+              <span style="color:var(--text-muted);">Mesh Node Count:</span>
+              <strong style="color:#fff;" id="telNodeCount">250,034 nodes</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+              <span style="color:var(--text-muted);">End-to-End Latency:</span>
+              <strong style="color:var(--accent-green);" id="telLatency">12 ms</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+              <span style="color:var(--text-muted);">Packet Loss Rate:</span>
+              <strong style="color:var(--accent-cyan);" id="telPacketLoss">0.0%</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+              <span style="color:var(--text-muted);">Failover Recovery Time:</span>
+              <strong style="color:var(--accent-amber);" id="telRecoveryTime">&lt;50ms Sub-second Healing</strong>
+            </div>
+            <div style="margin-top:8px; padding-top:6px; border-top:1px solid var(--border-subtle); color:var(--text-dim);">
+              Click <strong>Node D (Backup)</strong> directly on the stage to test dynamic failover.
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <!-- Main Module Scripts -->
+    <script type="module" src="/js/app.js"></script>
+  </body>
+</html>
