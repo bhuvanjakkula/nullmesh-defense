@@ -1,13 +1,44 @@
 {
-  "version": 2,
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/payment", "dest": "/payment.html" },
-    { "src": "/signin", "dest": "/signin.html" },
-    { "src": "/dashboard", "dest": "/dashboard.html" },
-    { "src": "/v0", "dest": "/index.v0.html" },
-    { "src": "/", "dest": "/index.html" }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "app": {
+      "root": "."
+    },
+    "backend": {
+      "root": "backend"
+    },
+    "nullmesh": {
+      "root": "nullmesh-core/nullmesh"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/payment",
+      "destination": "/payment.html"
+    },
+    {
+      "source": "/signin",
+      "destination": "/signin.html"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/dashboard.html"
+    },
+    {
+      "source": "/v0",
+      "destination": "/index.v0.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "app"
+      }
+    }
   ]
 }
