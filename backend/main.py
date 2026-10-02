@@ -65,20 +65,20 @@ def read_root():
 
 @app.post("/api/v1/auth/login")
 def auth_login(req: Optional[AuthRequest] = None):
-    """Passwordless owner authentication endpoint with full clearance and free subscription."""
-    email = (req.email if req and req.email else OWNER_EMAIL).lower().strip()
-    is_owner = (email == OWNER_EMAIL)
+    """Authentication endpoint with full clearance for owner and subscription validation for others."""
+    email = (req.email if req and req.email else "").lower().strip()
+    is_owner = (email == OWNER_EMAIL.lower())
 
     return {
-        "access_token": "nullmesh_owner_bhuvan_jwt_token_999",
+        "access_token": "nullmesh_owner_bhuvan_jwt_token_999" if is_owner else f"nullmesh_token_{abs(hash(email))}",
         "token_type": "bearer",
-        "subscription_active": True,
-        "tier": "commandant",
-        "role": "owner" if is_owner else "operator",
-        "clearance": "COMMANDANT_MAX",
-        "passwordless": True,
-        "user": email,
-        "status": "authenticated"
+        "subscription_active": is_owner,
+        "tier": "commandant" if is_owner else "unsubscribed",
+        "role": "owner" if is_owner else "guest",
+        "clearance": "COMMANDANT_MAX" if is_owner else "RESTRICTED",
+        "passwordless": is_owner,
+        "user": email or "guest",
+        "status": "authenticated" if is_owner else "payment_required"
     }
 
 

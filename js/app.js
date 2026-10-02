@@ -103,8 +103,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (btnSignOut) {
     btnSignOut.addEventListener("click", () => {
+      sessionStorage.removeItem("nullmesh_authenticated_user");
+      localStorage.removeItem("nullmesh_active_user");
       window.location.href = "/signin.html";
     });
+  }
+
+  // Active Session Verification
+  const activeAuthedUser = sessionStorage.getItem("nullmesh_authenticated_user") || localStorage.getItem("nullmesh_active_user");
+  const activeToken = localStorage.getItem("token");
+
+  if (activeAuthedUser) {
+    if (topUserEmail) topUserEmail.textContent = activeAuthedUser;
+  } else if (activeToken === "nullmesh_owner_bhuvan_jwt_token_999") {
+    if (topUserEmail) topUserEmail.textContent = "bhuvanjakkula@gmail.com";
+  } else {
+    if (window.location.pathname.includes("dashboard")) {
+      window.location.href = "/signin.html";
+    }
   }
 
   // --- VIEW NAVIGATION CONTROLLER ---

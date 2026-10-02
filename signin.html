@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NULLMESH DEFENSE // Vercel Commander Sign In</title>
+    <title>NULLMESH DEFENSE // Secure Commander Sign In</title>
     
     <!-- Modern Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +28,7 @@
       .page-switch-bar {
         background: rgba(6, 10, 22, 0.95);
         border-bottom: 1px solid rgba(0, 243, 255, 0.25);
-        padding: 10px 24px;
+        padding: 12px 24px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -40,16 +40,16 @@
 
       .page-switch-links {
         display: flex;
-        gap: 10px;
+        gap: 12px;
         align-items: center;
       }
 
       .switch-btn {
         text-decoration: none;
-        padding: 6px 14px;
+        padding: 7px 16px;
         border-radius: 6px;
         font-family: 'Roboto Mono', monospace;
-        font-size: 0.75rem;
+        font-size: 0.78rem;
         font-weight: 700;
         border: 1px solid rgba(255,255,255,0.1);
         color: #8b9eb5;
@@ -96,12 +96,24 @@
         box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
         transform: translateY(-2px);
       }
+
+      .btn-stripe-outline {
+        background: transparent;
+        color: #fff;
+        border: 1px solid #1a2736;
+      }
+
+      .btn-stripe-outline:hover {
+        background: rgba(255,255,255,0.06);
+        border-color: #00f3ff;
+        color: #00f3ff;
+      }
     </style>
   </head>
   <body>
 
     <!-- ======================================================== -->
-    <!-- TOP NAVIGATION: SWITCH SEPARATELY BETWEEN ALL 3 PAGES   -->
+    <!-- TOP DEFENSE PORTAL HEADER (SECURE PUBLIC NAVIGATION)    -->
     <!-- ======================================================== -->
     <header class="page-switch-bar">
       <div style="display:flex; align-items:center; gap:10px;">
@@ -112,20 +124,11 @@
       </div>
 
       <nav class="page-switch-links">
-        <span style="font-family:'Roboto Mono', monospace; font-size:0.68rem; color:#8b9eb5; margin-right:4px;">
-          SEPARATE WEB PAGES:
-        </span>
-        <a href="/signin.html" class="switch-btn active-page">
-          🔑 1. SIGN IN PAGE (VERCEL)
-        </a>
         <a href="/payment.html" class="switch-btn">
-          💳 2. PAYMENT & PLANS (VERCEL)
+          💳 SUBSCRIPTIONS & PLANS
         </a>
-        <a href="/dashboard.html" class="switch-btn">
-          ⚡ 3. MAIN FUNCTION WEB PAGE
-        </a>
-        <a href="/index.v0.html" class="switch-btn" style="border-color:#475569;">
-          ORIGINAL V0
+        <a href="/signin.html" class="switch-btn active-page">
+          🔑 COMMANDER SIGN IN
         </a>
       </nav>
     </header>
@@ -192,11 +195,11 @@
             <form id="vercelLoginForm" class="auth-form" style="display:flex; flex-direction:column; gap:1.25rem;">
               <div class="auth-input-group">
                 <label style="color:#8b9eb5; margin-bottom:0.5rem; font-size:0.82rem; display:block;">Military / Enterprise Email ID</label>
-                <input type="email" id="vEmail" value="bhuvanjakkula@gmail.com" style="border:1px solid #1a2736; color:#fff; background:#000; border-radius:8px; width:100%; padding:0.9rem; font-family:inherit; font-size:0.95rem; outline:none;" required />
+                <input type="email" id="vEmail" value="" placeholder="officer@defense.mil or user@enterprise.com" autocomplete="email" style="border:1px solid #1a2736; color:#fff; background:#000; border-radius:8px; width:100%; padding:0.9rem; font-family:inherit; font-size:0.95rem; outline:none;" required />
               </div>
 
               <div class="auth-input-group">
-                <label style="color:#8b9eb5; margin-bottom:0.5rem; font-size:0.82rem; display:block;">Decryption Password (Optional for Commander)</label>
+                <label style="color:#8b9eb5; margin-bottom:0.5rem; font-size:0.82rem; display:block;">Decryption Password / Access Key</label>
                 <input type="password" id="vPassword" placeholder="••••••••" style="border:1px solid #1a2736; color:#fff; background:#000; border-radius:8px; width:100%; padding:0.9rem; font-family:inherit; font-size:0.95rem; outline:none;" />
               </div>
 
@@ -205,13 +208,11 @@
               </button>
 
               <a href="/payment.html" class="btn-stripe btn-stripe-outline" style="width:100%; text-align:center; padding:0.85rem; font-size:0.85rem; border-color:#1a2736; color:#8b9eb5;">
-                VIEW VERCEL PAYMENT & STRIPE PLANS 💳
+                VIEW DEFENSE SUBSCRIPTIONS & PLANS 💳
               </a>
             </form>
 
-            <div id="vFeedback" style="display:none; margin-top:12px; font-size:0.78rem; padding:8px 12px; border-radius:6px; background:rgba(0,245,155,0.15); border:1px solid #00f59b; color:#00f59b;">
-              ✓ Credentials authenticated. Unlocking terminal...
-            </div>
+            <div id="vFeedback" style="display:none; margin-top:14px; font-size:0.8rem; padding:12px; border-radius:8px;"></div>
 
             <div style="display:flex; justify-content:space-between; font-size:0.65rem; color:#8b9eb5; border-top:1px solid #1a2736; padding-top:12px; margin-top:1.5rem;">
               <span>NIST FIPS 203 ML-KEM-768</span>
@@ -232,21 +233,80 @@
 
       form.addEventListener("submit", (e) => {
         e.preventDefault();
-        const email = emailInput ? emailInput.value.trim() : "bhuvanjakkula@gmail.com";
-        localStorage.setItem("token", "nullmesh_owner_bhuvan_jwt_token_999");
-        sessionStorage.setItem("nullmesh_authenticated_user", email);
+        const rawEmail = emailInput ? emailInput.value.trim() : "";
+        if (!rawEmail) {
+          if (feedback) {
+            feedback.style.display = "block";
+            feedback.style.background = "rgba(255, 51, 51, 0.15)";
+            feedback.style.borderColor = "#ff3333";
+            feedback.style.color = "#ff6666";
+            feedback.textContent = "Please enter your military or enterprise email address.";
+          }
+          return;
+        }
 
-        if (feedback) feedback.style.display = "block";
+        const email = rawEmail.toLowerCase();
+        const isOwner = (email === "bhuvanjakkula@gmail.com");
 
-        fetch("http://127.0.0.1:8001/api/v1/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email, password: "" })
-        }).finally(() => {
+        // Check if user has an active paid subscription
+        let hasPaidSub = false;
+        try {
+          hasPaidSub = localStorage.getItem("nullmesh_paid_sub_" + email) === "active" ||
+                       localStorage.getItem("nullmesh_sub_" + email) === "active";
+        } catch(err) {}
+
+        if (isOwner) {
+          // Sovereign Owner Access (Complimentary Lifetime Clearance)
+          localStorage.setItem("token", "nullmesh_owner_bhuvan_jwt_token_999");
+          sessionStorage.setItem("nullmesh_authenticated_user", "bhuvanjakkula@gmail.com");
+          localStorage.setItem("nullmesh_active_user", "bhuvanjakkula@gmail.com");
+
+          feedback.style.display = "block";
+          feedback.style.background = "rgba(0,245,155,0.15)";
+          feedback.style.border = "1px solid #00f59b";
+          feedback.style.color = "#00f59b";
+          feedback.innerHTML = "✓ Credentials authenticated. Unlocking tactical defense terminal...";
+
+          fetch("/api/v1/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: email, password: "" })
+          }).catch(() => {}).finally(() => {
+            setTimeout(() => {
+              window.location.href = "/dashboard.html";
+            }, 350);
+          });
+        } else if (hasPaidSub) {
+          // Paid Operator Access
+          localStorage.setItem("token", "nullmesh_operator_jwt_token_" + btoa(email).slice(0, 12));
+          sessionStorage.setItem("nullmesh_authenticated_user", email);
+          localStorage.setItem("nullmesh_active_user", email);
+
+          feedback.style.display = "block";
+          feedback.style.background = "rgba(0,245,155,0.15)";
+          feedback.style.border = "1px solid #00f59b";
+          feedback.style.color = "#00f59b";
+          feedback.innerHTML = "✓ Active defense subscription verified. Unlocking terminal...";
+
           setTimeout(() => {
             window.location.href = "/dashboard.html";
-          }, 300);
-        });
+          }, 350);
+        } else {
+          // Unpaid visitor / unauthorized user: DENY ACCESS & REQUIRE PAYMENT
+          feedback.style.display = "block";
+          feedback.style.background = "rgba(255, 51, 51, 0.15)";
+          feedback.style.border = "1px solid #ff3333";
+          feedback.style.color = "#ff6666";
+          feedback.innerHTML = `
+            <div style="font-weight:700; margin-bottom:4px; font-size:0.85rem;">⚠️ ACCESS RESTRICTED: SUBSCRIPTION REQUIRED</div>
+            <div style="font-size:0.75rem; color:#cbd5e1; margin-bottom:10px; line-height:1.4;">
+              No active defense subscription or clearance found for <strong>${rawEmail}</strong>. You must purchase an active defense plan to access the NULLMESH tactical network.
+            </div>
+            <a href="/payment.html" class="btn-stripe btn-stripe-primary" style="display:inline-block; padding:8px 16px; font-size:0.78rem; text-decoration:none; background:#ff3333; border-color:#ff3333; color:#fff; border-radius:4px; font-weight:700;">
+              VIEW PLANS & SUBSCRIBE ➔
+            </a>
+          `;
+        }
       });
     </script>
   </body>
