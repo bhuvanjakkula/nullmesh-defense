@@ -419,7 +419,7 @@ sub_wrapper_html = """
                       <li>BB84 Entangled Photon QKD (300 km Channel)</li>
                       <li>NIST FIPS 203 ML-KEM-768 Lattice Cryptography</li>
                       <li>ML-DSA-65 Quantum-Resistant Digital Signatures</li>
-                      <li>Sudarshan Chakra Saturation Defense Grid</li>
+                      <li>AEGIS IAMD Saturation Defense Grid</li>
                       <li>Sub-second Autonomous Self-Healing Mesh</li>
                       <li>Direct Python v0.1 Core Package Access</li>
                     </ul>

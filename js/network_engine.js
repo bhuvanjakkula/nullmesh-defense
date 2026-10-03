@@ -60,8 +60,8 @@ export class MultiDomainNetworkEngine {
     this.addNode("USV-MARINER", "sea", "Autonomous Surface Drone", 0.52, 0.56, { edgeRelay: true });
     this.addNode("UUV-ORCA-SUB", "sea", "Subsurface Acoustic Gateway", 0.72, 0.64, { stealth: true });
 
-    // 4. LAND DOMAIN (Tactical MANET, Sudarshan Chakra Air Defense, HF BLOS)
-    this.addNode("SUDARSHAN-SAM", "land", "Sudarshan Chakra Air Defense Hub", 0.22, 0.82, { distributedShooter: true });
+    // 4. LAND DOMAIN (Tactical MANET, AEGIS IAMD Air Defense, HF BLOS)
+    this.addNode("AEGIS-IAMD-01", "land", "AEGIS IAMD Air Defense Hub", 0.22, 0.82, { distributedShooter: true });
     this.addNode("MOBILE-TOC", "land", "Mobile Tactical Operations Center", 0.44, 0.80, { manet: true });
     this.addNode("MANET-CONVOY", "land", "Rajant Tactical Edge Mesh", 0.62, 0.84, { peer2peer: true });
     this.addNode("STANAG-5066-HF", "land", "BLOS Ionospheric Bounce Station", 0.84, 0.82, { ionoBounce: true });
@@ -88,7 +88,7 @@ export class MultiDomainNetworkEngine {
     // Air-to-Sea & Air-to-Land Downlinks
     this.addLink("DAF-BATTLE-01", "AEGIS-DDG-88", "tactical-data-link", 90, 8);
     this.addLink("E7-WEDGETAIL", "CVN-78-STRIKE", "cjadc2-mesh", 95, 6);
-    this.addLink("DAF-BATTLE-01", "SUDARSHAN-SAM", "anti-jam-link", 92, 7);
+    this.addLink("DAF-BATTLE-01", "AEGIS-IAMD-01", "anti-jam-link", 92, 7);
     this.addLink("E7-WEDGETAIL", "MOBILE-TOC", "private-5g", 90, 9);
 
     // Sea Naval Mesh
@@ -97,7 +97,7 @@ export class MultiDomainNetworkEngine {
     this.addLink("USV-MARINER", "UUV-ORCA-SUB", "acoustic-rf", 75, 25);
 
     // Land Tactical Edge MANET
-    this.addLink("SUDARSHAN-SAM", "MOBILE-TOC", "tactical-manet", 96, 4);
+    this.addLink("AEGIS-IAMD-01", "MOBILE-TOC", "tactical-manet", 96, 4);
     this.addLink("MOBILE-TOC", "MANET-CONVOY", "p2p-mesh", 94, 5);
     this.addLink("MANET-CONVOY", "STANAG-5066-HF", "secure-edge-rf", 90, 6);
 
@@ -202,7 +202,7 @@ export class MultiDomainNetworkEngine {
     this.log("THREAT_SATURATION", "🎯 Massive simultaneous drone swarm & ballistic saturation strike against primary command hub!", "danger");
     this.activeThreats.add("SATURATION_STRIKE");
 
-    const hub = this.nodes.get("SUDARSHAN-SAM");
+    const hub = this.nodes.get("AEGIS-IAMD-01");
     if (hub) {
       hub.status = "jammed";
       hub.health = 40;
@@ -282,7 +282,7 @@ export class MultiDomainNetworkEngine {
       }
 
       if (threatType === "SATURATION_STRIKE") {
-        this.log("HEAL_ENGINE", "🛡️ Sudarshan Chakra Doctrine: Master radar hub bypassed. Mobile shooter nodes elected autonomous peer coordination.", "success");
+        this.log("HEAL_ENGINE", "🛡️ AEGIS IAMD Doctrine: Master radar hub bypassed. Mobile shooter nodes elected autonomous peer coordination.", "success");
         const convoy = this.nodes.get("MANET-CONVOY");
         if (convoy) convoy.status = "rerouting";
       }

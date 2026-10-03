@@ -100,7 +100,7 @@ export class TacticalCanvasRenderer {
       { name: "SPACE DOMAIN (pLEO / MEO / GEO ORBITS)", y1: 0, y2: 0.22, color: "rgba(0, 243, 255, 0.02)" },
       { name: "AIR DOMAIN (DAF BATTLE NET / AEW&C / CCA)", y1: 0.22, y2: 0.48, color: "rgba(112, 161, 255, 0.02)" },
       { name: "SEA DOMAIN (CARRIER STRIKE GROUP / USV)", y1: 0.48, y2: 0.72, color: "rgba(0, 210, 211, 0.02)" },
-      { name: "LAND DOMAIN (TACTICAL MANET / SUDARSHAN CHAKRA)", y1: 0.72, y2: 1.0, color: "rgba(46, 213, 115, 0.02)" }
+      { name: "LAND DOMAIN (TACTICAL MANET / AEGIS IAMD)", y1: 0.72, y2: 1.0, color: "rgba(46, 213, 115, 0.02)" }
     ];
 
     domains.forEach(d => {
